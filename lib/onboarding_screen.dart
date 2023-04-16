@@ -1,5 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tech_share/cadastro.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -9,12 +11,13 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-  final controller = PageController(initialPage: 1);
-  int selectedindex = 1;
+  final controller = PageController(initialPage: 0);
+  int selectedindex = 0;
+
   final List<Widget> pageView = [
-    easterEgg,
     pagina1,
     pagina2,
+    pagina3,
   ];
 
   @override
@@ -38,8 +41,35 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _buildPageIndicator(),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                      visible: selectedindex > 0,
+                      maintainSize: true,
+                      maintainState: true,
+                      maintainAnimation: true,
+                      child: TextButton(
+                          onPressed: () => controller.animateToPage(
+                              selectedindex - 1,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn),
+                          child: const Text('VOLTAR'))),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _buildPageIndicator(),
+                  ),
+                  Visibility(
+                      visible: selectedindex < pageView.length - 1,
+                      maintainSize: true,
+                      maintainState: true,
+                      maintainAnimation: true,
+                      child: TextButton(
+                          onPressed: () => controller.animateToPage(
+                              selectedindex + 1,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn),
+                          child: const Text('PRÓXIMO'))),
+                ],
               ),
             ),
           ),
@@ -50,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
-    for (int i = 0; i < pageView.length; i++) {
+    for (int i = 0; i < 3 /*era pageView.length*/; i++) {
       list.add(i == selectedindex
           ? _indicator(true, i, controller, context)
           : _indicator(false, i, controller, context));
@@ -59,7 +89,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-Widget easterEgg = Stack(
+Widget pagina1 = Stack(
+  alignment: Alignment.center,
   children: [
     Align(
       alignment: Alignment.centerLeft,
@@ -67,31 +98,29 @@ Widget easterEgg = Stack(
           offset: const Offset(-150, 0),
           child: const Text('O real easter egg')),
     ),
-    const Center(
-      child: Text('Insira um easter egg legal aqui'),
-    ),
-  ],
-);
-
-Widget pagina1 = Column(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    Image.asset('images/1_1.png'),
     Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Aqui você encontra'),
-        AnimatedTextKit(
-          animatedTexts: [
-            textoAnimado('Manutentores'),
-            textoAnimado('Programadores'), //adicionar outros depois
-            textoAnimado('Técnicos de informática!'),
+        Image.asset(
+            'images/1_1.png'), //TODO: Inserir logo ou logo com nome da tech share
+        Column(
+          children: [
+            const Text('Seja bem-vindo ao Tech Share!',
+                style: TextStyle(fontSize: 18)),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              child: Text(
+                'Nosso objetivo é tanto ofertar oportunidades quanto tornar a sua vida mais fácil.',
+                textAlign: TextAlign.center,
+                style: GoogleFonts.lato(
+                  fontSize: 15,
+                ),
+              ),
+            ),
           ],
-          totalRepeatCount: 5,
-          pause: const Duration(milliseconds: 1000),
-          displayFullTextOnTap: true,
-          stopPauseOnTap: true,
-        )
+        ),
       ],
     ),
   ],
@@ -105,6 +134,7 @@ Widget pagina2 = Column(
       alignment: Alignment.center,
       children: [
         TextLiquidFill(
+          waveDuration: const Duration(seconds: 8),
           text: 'Deu ruim?',
           waveColor: Colors.blueAccent,
           boxBackgroundColor: const Color.fromARGB(0, 0, 0, 0),
@@ -116,15 +146,67 @@ Widget pagina2 = Column(
           boxWidth: 220,
         ),
         Image.asset(
-          'images/Background (1).png',
+          'images/DeuRuim.png',
           width: 300,
           height: 300,
         ), //fonte Akshar no google fonts
       ],
     ),
-    const Text('Não se preocupe. No Tech Share, você encontra.....')
+    Column(
+      children: [
+        const Text(
+          'Não se preocupe. No Tech Share, você encontra',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 18),
+        ),
+        AnimatedTextKit(
+          animatedTexts: [
+            textoAnimado('Manutentores'),
+            textoAnimado('Programadores'), //adicionar outros depois
+            textoAnimado('Técnicos de informática!'),
+          ],
+          totalRepeatCount: 5,
+          pause: const Duration(milliseconds: 1000),
+          displayFullTextOnTap: true,
+          stopPauseOnTap: true,
+        )
+      ],
+    )
   ],
 );
+
+Widget pagina3 = Column(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Image.asset('images/1_2.png'),
+    const Text(
+      'Pronto para usar o Tech Share?',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 18),
+    ),
+    ElevatedButton(
+        style: ButtonStyle(
+            padding: const MaterialStatePropertyAll(
+                EdgeInsets.symmetric(vertical: 8, horizontal: 32)),
+            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)))),
+        onPressed: () {
+          /*
+        TODO: redirecionar para a página cadastro
+        se tirar essa página do Pageview.builder e deixar um fixo provavelmente 
+        dá certo mas vai ficar mais complicado o código.
+        */
+          //goToCadastro(context);
+        },
+        child: const Text('Cadastrar-se'))
+  ],
+);
+
+void goToCadastro(BuildContext context) {
+  Navigator.of(context)
+      .push(MaterialPageRoute(builder: (context) => const Cadastro()));
+}
 
 Widget _indicator(bool isActive, int pos, PageController c, context) {
   return GestureDetector(
@@ -166,9 +248,7 @@ Widget _indicator(bool isActive, int pos, PageController c, context) {
 textoAnimado(String texto) {
   return TypewriterAnimatedText(
     texto,
-    textStyle: const TextStyle(
-      fontWeight: FontWeight.bold,
-    ),
+    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
     speed: const Duration(milliseconds: 200),
   );
 }
