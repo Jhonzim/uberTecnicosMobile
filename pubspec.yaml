@@ -38,7 +38,8 @@ dependencies:
   animated_text_kit: ^4.2.2 #Onboarding page, Aqui você encontra...
   google_fonts: ^4.0.3 #Acho que é melhor usar uma fonte local para melhorar a performance, mas por enquanto assim é mais fácil.
   all_validations_br: ^3.0.0 #Validar formulários e outras coisas
-  file_picker: ^4.4.0 #Inserir certificado do tecnico
+  file_picker: ^5.2.9 #Inserir certificado do tecnico
+  connectivity_plus: ^3.0.4 #Checar se há conexão antes de abrir o app
 
 dev_dependencies:
   flutter_test:

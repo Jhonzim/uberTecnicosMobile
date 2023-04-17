@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'cadastro.dart';
-import 'onboarding_screen.dart';
 
 class Index extends StatefulWidget {
   const Index({super.key});
@@ -10,151 +8,176 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State<Index> {
-  bool isFirstTime =
-      false; //usar shared preferences para saber se é ou não a primeira vez no app
-  bool isLoggedIn = false; //checar se o usuário está logado
-  @override
-  Widget build(BuildContext context) {
-    return isFirstTime
-        ? const OnboardingScreen()
-        : isLoggedIn
-            ? const Corpo()
-            : Cadastro();
-  }
-}
+  var usuario = {
+    'nome': 'Francisco',
+    'imagem':
+        'https://scontent.fcaw3-1.fna.fbcdn.net/v/t1.18169-9/227059_398887146857886_1609713474_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cdbe9c&_nc_ohc=mnNto5yvsJYAX8weDnU&_nc_ht=scontent.fcaw3-1.fna&oh=00_AfCUFOr3rSohVwwa37xOj-Sfo1Fe97Vgn7fHewIcN0dQtQ&oe=6463F925',
+    'imagemfundo':
+        'https://w0.peakpx.com/wallpaper/779/158/HD-wallpaper-fluminense-fc-paint-art-logo-creative-brazilian-football-team-brazilian-serie-a-emblem-burgundy-background-grunge-style-rio-de-janeiro-brazil-football.jpg',
+    'isTecnico': true,
+  };
 
-class Corpo extends StatefulWidget {
-  const Corpo({super.key});
-
-  @override
-  State<Corpo> createState() => _CorpoState();
-}
-
-class _CorpoState extends State<Corpo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: CustomScrollView(
-      slivers: [
-        const SliverAppBar(
-          title: Text('TECH SHARE'),
-          floating: true,
-        ),
-        SliverToBoxAdapter(
-          child: Container(
-            height: 200,
-            color: Colors.red,
-            child: const Center(child: Text('SliverToBoxAdapter')),
-          ),
-        ),
-        SliverGrid.count(
-          crossAxisCount: 2,
-          children: [
-            Container(color: Colors.green, child: const Text('SliverGrid')),
-            Container(color: Colors.blue, child: const Text('SliverGrid')),
-            Container(color: Colors.orange, child: const Text('SliverGrid')),
-            Container(color: Colors.purple, child: const Text('SliverGrid')),
-          ],
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return ListTile(
-                leading: CircleAvatar(
-                  child: Text('$index'),
+        drawer: Drawer(
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        image: DecorationImage(
+                          image:
+                              NetworkImage(usuario['imagemfundo'].toString()),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      child: OverflowBox(
+                        maxHeight: double.infinity,
+                        child: Transform.translate(
+                          offset: Offset(
+                              0, MediaQuery.of(context).size.height * 0.10),
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 52.0,
+                                backgroundColor: Colors.green,
+                                child: CircleAvatar(
+                                  radius: 50.0,
+                                  backgroundImage: NetworkImage(
+                                      usuario['imagem'].toString()),
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              ),
+                              Text(usuario['nome'].toString(),
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 18)),
+                              Text(usuario['isTecnico'] == true ? 'Usuário técnico' : 'Usuário comum'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.10),
+                    usuario['isTecnico'] != true
+                      ? ListTile(
+                          leading: const Icon(Icons.add_circle),
+                          title: const Text('Criar contratos'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      : const SizedBox(),
+                    ListTile(
+                      leading: const Icon(Icons.date_range),
+                      title: Text(usuario['isTecnico'] != true
+                          ? 'Contratos aceitos'
+                          : 'Contratos criados'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    usuario['isTecnico'] == true
+                        ? ListTile(
+                            leading: const Icon(Icons.bookmark),
+                            title: const Text('Contratos salvos'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        : const SizedBox(),
+                    usuario['isTecnico'] == true
+                        ? ListTile(
+                            leading: const Icon(Icons.access_time),
+                            title: const Text('Recentes'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        : const SizedBox(),
+                    ListTile(
+                      leading: const Icon(Icons.info),
+                      title: const Text('Sobre nós'),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
-                title: Text('SliverList item $index'),
-              );
-            },
-            childCount: 10,
-          ),
-        ),
-        SliverPersistentHeader(
-          delegate: _MyPersistentHeaderDelegate(),
-          pinned: true,
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
-          sliver: SliverFixedExtentList(
-            itemExtent: 50,
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text('$index'),
-                  ),
-                  title: Text('$index'),
-                );
-              },
-              childCount: 10,
-            ),
-          ),
-        ),
-        SliverFillViewport(
-          delegate: SliverChildListDelegate(
-            [
+              ),
               Container(
-                height: 800,
-                color: Colors.grey,
-                child: const Center(
+                decoration: BoxDecoration(color: Colors.black.withAlpha(50)),
+                height: MediaQuery.of(context).size.height * 0.09,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.settings),
+                          Text('Configurações', style: TextStyle(fontSize: 16))
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(
+                      width: 3,
+                    ),
+                    MaterialButton(
+                      onPressed: () {},
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.logout),
+                          Text('Sair da Conta', style: TextStyle(fontSize: 16))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        body: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              title: Text('TECH SHARE'),
+              floating: true,
+            ),
+            SliverFillViewport(
+              delegate: SliverChildListDelegate(
+                [
+                  const Center(
+                    child: Text('Não scrolle para baixo'),
+                  )
+                ],
+              ),
+            ),
+            const SliverPadding(padding: EdgeInsets.all(20)),
+            SliverFillRemaining(
+              child: ColoredBox(
+                color: Colors.green,
+                child: Center(
                   child: Text(
-                    'SliverFillViewport',
-                    style: TextStyle(
+                    'Seja bem-vindo, ${usuario['nome'].toString()}',
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-        SliverFillRemaining(
-          child: Container(
-            color: Colors.yellow,
-            child: const Center(
-              child: Text(
-                'SliverFillRemaining',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ),
-          ),
-        ),
-      ],
-    ));
-  }
-}
-
-class _MyPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      color: Colors.blue,
-      child: const Center(
-        child: Text(
-          'SliverPersistentHeader',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  double get maxExtent => 50;
-
-  @override
-  double get minExtent => 50;
-
-  @override
-  bool shouldRebuild(_MyPersistentHeaderDelegate oldDelegate) {
-    return false;
+          ],
+        ));
   }
 }
