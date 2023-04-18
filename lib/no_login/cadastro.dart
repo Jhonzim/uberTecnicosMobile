@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tech_share/no_login/login.dart';
+import 'package:tech_share/valores_e_funcoes.dart';
 
 class Cadastro extends StatefulWidget {
   final bool? comesFromLogin;
@@ -86,7 +87,7 @@ class _CadastroState extends State<Cadastro> {
               child: const Text('SIM'),
               onPressed: () {
                 Navigator.of(context).pop();
-                showSnackBar('Cadastrou-se como técnico');
+                showSnackBar('Cadastrou-se como técnico', context);
               },
             ),
           ],
@@ -94,14 +95,7 @@ class _CadastroState extends State<Cadastro> {
       },
     );
   }
-
-  void showSnackBar(String texto) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(texto),
-    ));
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,7 +109,7 @@ class _CadastroState extends State<Cadastro> {
                 onPressed: () => setState(() {
                       showSnackBar(isTecnico
                           ? 'Trocou para cadastro de usuário comum'
-                          : 'Trocou para cadastro de usuário técnico');
+                          : 'Trocou para cadastro de usuário técnico', context);
                       isTecnico = !isTecnico;
                     }),
                 icon: isTecnico 
@@ -364,7 +358,7 @@ class _CadastroState extends State<Cadastro> {
                             isTecnico
                                 ? _showMyDialog()
                                 : showSnackBar(
-                                    'Cadastrou-se como usuário comum');
+                                    'Cadastrou-se como usuário comum', context);
                           }
                         },
                         child: const Text('ENVIAR'),

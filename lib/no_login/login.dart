@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
+import 'package:tech_share/valores_e_funcoes.dart';
 import 'cadastro.dart';
 
 class Login extends StatefulWidget {
@@ -75,7 +76,7 @@ class _LoginState extends State<Login> {
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(builder: (context) => const BottomNavBar()),
                             (Route route) => false);
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login realizado com sucesso.')));
+                            showSnackBar('Login realizado com sucesso.', context);
                       },
                       child: const Text('ENTRAR'),
                     ),

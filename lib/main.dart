@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
 import 'package:tech_share/no_login/landing_page.dart';
+import 'package:tech_share/no_login/login.dart';
 import 'package:tech_share/no_login/onboarding_screen.dart';
 
 Future<void> main() async {
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
                   borderRadius:
                       BorderRadius.vertical(bottom: Radius.circular(20)))),
         ),
-        home: const CheckIn());
+        home: Sizer(
+          builder: (p0, p1, p2) => const CheckIn(),
+        ));
   }
 }
 
@@ -46,7 +50,7 @@ class _CheckInState extends State<CheckIn> {
       true; //usar shared preferences para saber se é ou não a primeira vez no app
   bool isLoggedIn = false; //checar se o usuário está logado
 
-  bool isDevTest = false; //inicializar em pagina para teste
+  bool isDevTest = true; //inicializar em pagina para teste
 
   @override
   Widget build(BuildContext context) {

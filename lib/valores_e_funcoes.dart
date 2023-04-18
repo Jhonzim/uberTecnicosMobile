@@ -145,3 +145,10 @@ buildStandardDrawer(context) => Drawer(
     ],
   ),
 );
+
+void showSnackBar(String texto, context) {
+  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(texto),
+  ));
+}
