@@ -12,7 +12,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  TextEditingController cpfCtrl = TextEditingController();
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController senhaCtrl = TextEditingController();
 
@@ -33,20 +32,6 @@ class _LoginState extends State<Login> {
             children: [
               Wrap(
                 children: [
-                  const SizedBox(height: 5),
-                  FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: TextField(
-                      controller: cpfCtrl,
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.account_circle),
-                        label: Text('CPF'),
-                        hintText: '123.456.789-00',
-                      ),
-                      keyboardType: TextInputType.number,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    ),
-                  ),
                   const SizedBox(height: 5),
                   FractionallySizedBox(
                     widthFactor: 0.9,
@@ -88,21 +73,15 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         //TODO: Implementar login
                         Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => const BottomNavBar(
-                                  snackBar: SnackBar(content: Text('Login realizado com sucesso.')),
-                                )),
+                            MaterialPageRoute(builder: (context) => const BottomNavBar()),
                             (Route route) => false);
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Login realizado com sucesso.')));
                       },
                       child: const Text('ENTRAR'),
                     ),
                   ),
                   const SizedBox(height: 5),
                 ],
-              ),
-              const Center(
-                child: Text(//TODO: Decidir.
-                    'Email ou CPF? Email é mais intuitivo mas possibilita a criação de muitas contas. O CPF é mais seguro mas possibilita apenas uma conta por pessoa.'),
               ),
               Column(
                 children: [

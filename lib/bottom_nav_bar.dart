@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tech_share/no_login/landing_page.dart';
 import 'index.dart';
+import 'teste.dart';
 
 class BottomNavBar extends StatefulWidget {
   final SnackBar? snackBar;
@@ -14,15 +14,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Index(),
+    Teste(),
     Placeholder(),
-    LandingPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ScaffoldMessenger.of(context).showSnackBar(widget.snackBar!);
-    });
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(

@@ -27,23 +27,26 @@ class _IndexState extends State<Index> {
                 child: ListView(
                   padding: EdgeInsets.zero,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        image: DecorationImage(
-                          image:
-                              NetworkImage(usuario['imagemfundo'].toString()),
-                          fit: BoxFit.cover,
+                    Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  usuario['imagemfundo'].toString()),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          height: MediaQuery.of(context).size.height * 0.18,
                         ),
-                      ),
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      child: OverflowBox(
-                        maxHeight: double.infinity,
-                        child: Transform.translate(
-                          offset: Offset(
-                              0, MediaQuery.of(context).size.height * 0.10),
+                        Align(
+                          alignment: Alignment.center,
                           child: Column(
                             children: [
+                              SizedBox(
+                                  height: MediaQuery.of(context).size.height *
+                                      0.12),
                               CircleAvatar(
                                 radius: 52.0,
                                 backgroundColor: Colors.green,
@@ -57,22 +60,23 @@ class _IndexState extends State<Index> {
                               Text(usuario['nome'].toString(),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(fontSize: 18)),
-                              Text(usuario['isTecnico'] == true ? 'Usuário técnico' : 'Usuário comum'),
+                              Text(usuario['isTecnico'] == true
+                                  ? 'Usuário técnico'
+                                  : 'Usuário comum'),
                             ],
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.10),
                     usuario['isTecnico'] != true
-                      ? ListTile(
-                          leading: const Icon(Icons.add_circle),
-                          title: const Text('Criar contratos'),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        )
-                      : const SizedBox(),
+                        ? ListTile(
+                            leading: const Icon(Icons.add_circle),
+                            title: const Text('Criar contratos'),
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                          )
+                        : const SizedBox(),
                     ListTile(
                       leading: const Icon(Icons.date_range),
                       title: Text(usuario['isTecnico'] != true
@@ -117,7 +121,9 @@ class _IndexState extends State<Index> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,10 +134,13 @@ class _IndexState extends State<Index> {
                       ),
                     ),
                     const VerticalDivider(
-                      width: 3,
+                      thickness: 0.5,
+                      width: 0,
                     ),
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,8 +174,77 @@ class _IndexState extends State<Index> {
             const SliverPadding(padding: EdgeInsets.all(20)),
             SliverFillRemaining(
               child: ColoredBox(
-                color: Colors.green,
-                child: Center(
+                  color: Colors.green,
+                  child: Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: ListWheelScrollView(
+                      itemExtent: 100,
+                      children: const [
+                        ListTile(
+                          leading: Icon(Icons.local_activity, size: 50),
+                          title: Text('Activity'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_airport, size: 50),
+                          title: Text('Airport'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_atm, size: 50),
+                          title: Text('ATM'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_bar, size: 50),
+                          title: Text('Bar'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_cafe, size: 50),
+                          title: Text('Cafe'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_car_wash, size: 50),
+                          title: Text('Car Wash'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading:
+                              Icon(Icons.local_convenience_store, size: 50),
+                          title: Text('Heart Shaker'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_dining, size: 50),
+                          title: Text('Dining'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_drink, size: 50),
+                          title: Text('Drink'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_florist, size: 50),
+                          title: Text('Florist'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_gas_station, size: 50),
+                          title: Text('Gas Station'),
+                          subtitle: Text('Description here'),
+                        ),
+                        ListTile(
+                          leading: Icon(Icons.local_grocery_store, size: 50),
+                          title: Text('Grocery Store'),
+                          subtitle: Text('Description here'),
+                        ),
+                      ],
+                    ),
+                  )
+                  /*Center(
                   child: Text(
                     'Seja bem-vindo, ${usuario['nome'].toString()}',
                     style: const TextStyle(
@@ -174,8 +252,8 @@ class _IndexState extends State<Index> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ),
+                ),*/
+                  ),
             ),
           ],
         ));

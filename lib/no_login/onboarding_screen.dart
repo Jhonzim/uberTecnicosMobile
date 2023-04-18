@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tech_share/no_login/cadastro.dart';
+import 'package:tech_share/no_login/landing_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -38,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset('images/iconeroubado.png', width: MediaQuery.of(context).size.width/2), //TODO: Inserir logo ou logo com nome da tech share
+                        Image.asset('images/iconeroubado.png', height: MediaQuery.of(context).size.height*0.30),
                         Column(
                           children: [
                             const Text('Seja bem-vindo ao Tech Share!',
@@ -59,7 +59,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ],
                 ),
-              ),
+              ),//*Pagina 2
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.93,
                 child: Column(
@@ -78,30 +78,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
                           ),
-                          boxHeight: 200,
-                          boxWidth: 220,
+                          boxHeight: MediaQuery.of(context).size.height*0.25,
+                          boxWidth: MediaQuery.of(context).size.height*0.30,
                         ),
                         Image.asset(
                           'images/DeuRuim.png',
-                          width: 300,
-                          height: 300,
+                          height: MediaQuery.of(context).size.height*0.40,
                         ), //fonte Akshar no google fonts
                       ],
                     ),
                     Column(
                       children: [
-                        const Text(
+                        Text(
                           'Não se preocupe. No Tech Share, você encontra',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18),
+                          style: GoogleFonts.lato(fontSize: 18),
                         ),
                         AnimatedTextKit(
                           animatedTexts: [
+                            textoAnimado('Programadores'),
                             textoAnimado('Manutentores'),
-                            textoAnimado('Programadores'), //adicionar outros depois
+                            textoAnimado('Empreendedores'),
                             textoAnimado('Técnicos de informática!'),
                           ],
-                          totalRepeatCount: 5,
+                          isRepeatingAnimation: true,
                           pause: const Duration(milliseconds: 1000),
                           displayFullTextOnTap: true,
                           stopPauseOnTap: true,
@@ -110,18 +110,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     )
                   ],
                 ),
-              ),
+              ),//*Pagina 3
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.93,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('images/1_2.png'),
-                    const Text(
-                      'Pronto para usar o Tech Share?',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
+                    Image.asset('images/avaliacoes.png', width: MediaQuery.of(context).size.width*0.60),
+                    Column(
+                      children: [
+                        Text(
+                          'Seu dispositivo está em boas mãos',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(fontSize: 18),
+                        ),
+                        const SizedBox(height: 5),
+                        FractionallySizedBox(
+                          widthFactor: 0.9,
+                          child: Text(
+                            'Seu dispositivo merece os melhores cuidados, e na Tech Share você pode confiar! Os técnicos são avaliados após cada serviço prestado, garantindo a qualidade do atendimento e proporcionando segurança e tranquilidade para o próximo contratante. Conte conosco para resolver seus problemas de informática de forma confiável e eficiente!',
+                            textAlign: TextAlign.justify,
+                            style: GoogleFonts.lato(fontSize: 15),
+                          ),
+                        ),
+                      ],
                     ),
                     ElevatedButton(
                         style: ButtonStyle(
@@ -130,10 +143,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30)))),
                         onPressed: () {
-                          //TODO: Atualizar o isFirstTime para false.
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const  Cadastro()), (Route route) => false);
+                          //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const  LandingPage()), (Route route) => false);
                         },
-                        child: const Text('CADASTRAR-SE'))
+                        child: const Text('PROSSEGUIR'))
                   ],
                 ),
               ),
@@ -235,7 +248,7 @@ Widget _indicator(bool isActive, int pos, PageController c, context) {
 textoAnimado(String texto) {
   return TypewriterAnimatedText(
     texto,
-    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+    textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 15),
     speed: const Duration(milliseconds: 200),
   );
 }

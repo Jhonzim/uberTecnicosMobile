@@ -1,4 +1,4 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
 import 'package:tech_share/no_login/landing_page.dart';
@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        scrollBehavior: ScrollBehavior(),
         title: 'Tech Share',
         theme: ThemeData(
           snackBarTheme:
@@ -35,7 +34,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CheckIn extends StatefulWidget{
+class CheckIn extends StatefulWidget {
   const CheckIn({super.key});
 
   @override
@@ -43,21 +42,20 @@ class CheckIn extends StatefulWidget{
 }
 
 class _CheckInState extends State<CheckIn> {
-  void initState() {
-    super.initState();
-    //TODO: Usar conectivity aqui
-  }
-
   bool isFirstTime =
       true; //usar shared preferences para saber se é ou não a primeira vez no app
   bool isLoggedIn = false; //checar se o usuário está logado
 
+  bool isDevTest = false; //inicializar em pagina para teste
+
   @override
   Widget build(BuildContext context) {
-    return isFirstTime
-        ? const OnboardingScreen()
+    return isDevTest
+        ? const BottomNavBar()
         : isLoggedIn
             ? const BottomNavBar()
-            : const LandingPage();
+            : isFirstTime
+                ? const OnboardingScreen()
+                : const LandingPage();
   }
 }

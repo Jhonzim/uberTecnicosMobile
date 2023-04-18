@@ -24,7 +24,7 @@ class _LandingPageState extends State<LandingPage> {
                     fit: StackFit.expand,
                     alignment: Alignment.center,
                     children: [
-                      Image.asset('images/menorqualidade.png',
+                      Image.asset('images/tecnicoolhando.jpg',
                           fit: BoxFit.cover),
                       BackdropFilter(
                         filter: ImageFilter.blur(
@@ -38,10 +38,11 @@ class _LandingPageState extends State<LandingPage> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image.asset(
-                              'images/iconeroubado.png', width: MediaQuery.of(context).size.width/2), //logo da tech share com nome
+                          Image.asset('images/iconeroubado.png',
+                              height: MediaQuery.of(context).size.height *
+                                  0.30), //logo da tech share com nome
                           SizedBox(
-                            width: MediaQuery.of(context).size.width*0.50,
+                            width: MediaQuery.of(context).size.width * 0.50,
                             child: Column(
                               children: [
                                 FractionallySizedBox(
@@ -51,13 +52,16 @@ class _LandingPageState extends State<LandingPage> {
                                         shape: MaterialStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(30)))),
+                                                    BorderRadius.circular(
+                                                        30)))),
                                     onPressed: () => Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) => const Login())),
+                                            builder: (context) =>
+                                                const Login())),
                                     child: const Text('ENTRAR'),
                                   ),
                                 ),
+                                const SizedBox(height: 10),
                                 FractionallySizedBox(
                                   widthFactor: 0.9,
                                   child: ElevatedButton(
@@ -65,7 +69,8 @@ class _LandingPageState extends State<LandingPage> {
                                         shape: MaterialStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(30)))),
+                                                    BorderRadius.circular(
+                                                        30)))),
                                     onPressed: () => Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
