@@ -23,7 +23,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             physics: const BouncingScrollPhysics(),
             controller: controller,
             children: [
-              SizedBox(//*Pagina 1
+              SizedBox(
+                //*Pagina 1
                 height: MediaQuery.of(context).size.height * 0.93,
                 child: Stack(
                   alignment: Alignment.center,
@@ -38,13 +39,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset('images/iconeroubado.png', height: MediaQuery.of(context).size.height*0.30),
+                        Image.asset('images/iconeroubado.png',
+                            height: MediaQuery.of(context).size.height * 0.30),
                         Column(
                           children: [
                             const Text('Seja bem-vindo ao Tech Share!',
-                              style: TextStyle(fontSize: 18)),
+                                style: TextStyle(fontSize: 18)),
                             Padding(
-                              padding:const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 16.0),
                               child: Text(
                                 'Nosso objetivo é tanto ofertar oportunidades quanto tornar a sua vida mais fácil.',
                                 textAlign: TextAlign.center,
@@ -59,9 +62,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   ],
                 ),
-              ),//*Pagina 2
+              ), //*Pagina 2
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.93,
+                height: MediaQuery.of(context).size.height * 0.93,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -78,12 +81,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
                           ),
-                          boxHeight: MediaQuery.of(context).size.height*0.25,
-                          boxWidth: MediaQuery.of(context).size.height*0.30,
+                          boxHeight: MediaQuery.of(context).size.height * 0.25,
+                          boxWidth: MediaQuery.of(context).size.height * 0.30,
                         ),
                         Image.asset(
                           'images/DeuRuim.png',
-                          height: MediaQuery.of(context).size.height*0.40,
+                          height: MediaQuery.of(context).size.height * 0.40,
                         ), //fonte Akshar no google fonts
                       ],
                     ),
@@ -110,14 +113,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     )
                   ],
                 ),
-              ),//*Pagina 3
+              ), //*Pagina 3
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.93,
+                height: MediaQuery.of(context).size.height * 0.93,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('images/avaliacoes.png', width: MediaQuery.of(context).size.width*0.60),
+                    Image.asset('images/avaliacoes.png',
+                        width: MediaQuery.of(context).size.width * 0.60),
                     Column(
                       children: [
                         Text(
@@ -136,20 +140,104 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                       ],
                     ),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            padding: const MaterialStatePropertyAll(
-                                EdgeInsets.symmetric(vertical: 8, horizontal: 32)),
-                            shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30)))),
-                        onPressed: () {
-                          //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const  LandingPage()), (Route route) => false);
-                        },
-                        child: const Text('PROSSEGUIR'))
                   ],
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.93,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        const Text('Tech Share',
+                        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+                        Text(
+                          'Com o Tech Share, compartilhe seus problemas tecnológicos e\nencontre a solução com um técnico especializado!',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          'E então, está pronto?',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.lato(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          child: SizedBox(
+                            height: 320,
+                            width: 180,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('images/1_1.png'),
+                                  Text(
+                                      'Busco contratar profissionais',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato()),
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LandingPage()),
+                                                  (Route route) => false),
+                                      child: const Text('Sou cliente'))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          child: SizedBox(
+                            height: 320,
+                            width: 180,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Image.asset('images/1_1.png'),
+                                  Text(
+                                      'Busco novos clientes e contratos a realizar',
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.lato()),
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
+                                          Navigator.of(context)
+                                              .pushAndRemoveUntil(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LandingPage()),
+                                                  (Route route) => false),
+                                      child: const Text('Sou profissional'))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              )
             ],
             onPageChanged: (int page) => setState(() {
               selectedindex = page;
@@ -178,7 +266,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     children: _buildPageIndicator(),
                   ),
                   Visibility(
-                      visible: selectedindex < 2,
+                      visible: selectedindex < 3 /* era pageView.length - 1 */,
                       maintainSize: true,
                       maintainState: true,
                       maintainAnimation: true,
@@ -199,7 +287,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   List<Widget> _buildPageIndicator() {
     List<Widget> list = [];
-    for (int i = 0; i < 3 /*era pageView.length*/; i++) {
+    for (int i = 0; i < 4 /* era pageView.length */; i++) {
       list.add(i == selectedindex
           ? _indicator(true, i, controller, context)
           : _indicator(false, i, controller, context));

@@ -3,8 +3,7 @@ import 'index.dart';
 import 'teste.dart';
 
 class BottomNavBar extends StatefulWidget {
-  final SnackBar? snackBar;
-  const BottomNavBar({Key? key, this.snackBar}) : super(key: key);
+  const BottomNavBar({super.key});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
