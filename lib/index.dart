@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:sizer/sizer.dart';
 import 'valores_e_funcoes.dart';
 
@@ -16,6 +17,16 @@ class _IndexState extends State<Index> {
   double sQ = 1;
 
   List<String> categorias = [
+    'Manutenção de computadores e celulares',
+    'Programação para dispositivos moveis',
+    'Redes de computadores',
+    'Inteligências artificiais',
+    'Programação para web',
+    'Automação de processos',
+    'Desenvolvimento de jogos',
+    'Engenheiro de dados'
+  ];
+  List<String> subcategorias = [
     'Manutenção de computadores e celulares',
     'Programação para dispositivos moveis',
     'Redes de computadores',
@@ -79,41 +90,35 @@ class _IndexState extends State<Index> {
                       itemCount: categorias.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: MaterialButton(
-                          onPressed: () => setState(() {
-                            showSnackBar(
-                                'Pesquisar por ${categorias[index]}', context);
-                          }),
-                          padding: const EdgeInsets.all(0.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 20.w,
-                                height: 20.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: Colors.black26)),
-                                child: Center(
-                                  child: Image.asset(
-                                    'images/1_1.png',
-                                    height: 12.w,
-                                    width: 12.w,
-                                  ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 20.w,
+                              height: 20.w,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Colors.black26)),
+                              child: Center(
+                                child: Image.asset(
+                                  'images/1_1.png',
+                                  height: 12.w,
+                                  width: 12.w,
                                 ),
                               ),
-                              SizedBox(
-                                width: 20.w,
-                                child: Text(
-                                  categorias[index],
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )
-                            ],
-                          ),
+                            ),
+                            SizedBox(
+                              width: 20.w,
+                              child: Text(
+                                categorias[index],
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 7.sp),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),
@@ -124,6 +129,165 @@ class _IndexState extends State<Index> {
             SliverFillViewport(
               delegate: SliverChildListDelegate(
                 [
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 90.w,
+                        height: 20.h,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.asset(
+                              'images/tecnicoolhando.jpg',
+                              fit: BoxFit.cover,
+                              height: double.infinity,
+                              width: double.infinity,
+                            ),
+                            BackdropFilter(
+                              filter:
+                                  ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                              child: Container(
+                                color: Colors.black.withOpacity(0.5),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 3.w),
+                                  child: Wrap(
+                                    direction: Axis.vertical,
+                                    children: [
+                                      const Text(
+                                        'Acessar',
+                                        style: TextStyle(
+                                          fontSize: 23.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Text(
+                                        'Acompanhe seus contratos',
+                                        style: GoogleFonts.lato(
+                                          fontSize: 20.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(right: 3.w),
+                                  child: OutlinedButton(
+                                    onPressed: () => setState(() {}),
+                                    style: ButtonStyle(
+                                      padding: const MaterialStatePropertyAll(
+                                          EdgeInsets.all(10)),
+                                      shape: MaterialStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                        ),
+                                      ),
+                                      side: const MaterialStatePropertyAll(
+                                        BorderSide(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Icon(Icons.arrow_right),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 2.h),
+                      SizedBox(
+                        child: Column(
+                          children: [
+                            FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: Text(
+                                'Você se qualifica',
+                                style: TextStyle(
+                                  fontSize: 8.sp,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge
+                                      ?.color
+                                      ?.withOpacity(0.5),
+                                ),
+                              ),
+                            ),
+                            FractionallySizedBox(
+                              widthFactor: 0.95,
+                              child: Text(
+                                'Programação',
+                                style: TextStyle(fontSize: 16.sp),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 35.w,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(
+                                    decelerationRate:
+                                        ScrollDecelerationRate.fast),
+                                itemCount: subcategorias.length,
+                                itemBuilder: (context, index) => Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    onTap: () => setState(() {
+                                      showSnackBar(
+                                          'Pesquisar por ${subcategorias[index]}',
+                                          context);
+                                    }),
+                                    child: Card(
+                                      elevation: 2,
+                                      clipBehavior: Clip.hardEdge,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: SizedBox(
+                                        width: 20.w,
+                                        height: 25.w,
+                                        child: Center(
+                                          child: Column(
+                                            children: [
+                                              Image.asset(
+                                                'images/1_1.png',
+                                                height: 20.w,
+                                                width: 20.w,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Expanded(
+                                                child: Center(
+                                                  child: Text(
+                                                    subcategorias[index],
+                                                    textAlign: TextAlign.center,
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        fontSize: 7.sp),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                   Container(
                     color: Colors.black.withAlpha(20),
                     child: Column(
@@ -148,7 +312,8 @@ class _IndexState extends State<Index> {
                                         shape: MaterialStatePropertyAll(
                                             RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(50)))),
+                                                    BorderRadius.circular(
+                                                        50)))),
                                     child: const Icon(Icons.arrow_right))
                               ],
                             ),

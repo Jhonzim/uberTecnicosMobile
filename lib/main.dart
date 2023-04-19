@@ -50,7 +50,7 @@ class _CheckInState extends State<CheckIn> {
       true; //usar shared preferences para saber se é ou não a primeira vez no app
   bool isLoggedIn = false; //checar se o usuário está logado
 
-  bool isDevTest = true; //inicializar em pagina para teste
+  bool isDevTest = false; //inicializar em pagina para teste
 
   @override
   Widget build(BuildContext context) {
