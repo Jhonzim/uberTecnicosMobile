@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-bool isIOS = Platform.isIOS;
+bool isIOS = !Platform.isIOS;
 
 var usuario = {
   'nome': 'Francisco',
@@ -118,6 +119,22 @@ List<Map<String, dynamic>> categorias = [
     ],
   },
 ];
+
+openUrl(url) async { //modificar o androidmanifest caso queira abrir links http
+  if (await canLaunchUrl(url)) {
+    await launchUrl(url, mode: LaunchMode.inAppWebView);
+  } else {
+    throw Exception('Could not launch $url');
+  }
+}
+sendEmail() {
+  Uri emailLaunchUri = Uri(
+    scheme: 'mailto',
+    path: 'Joaopedroalmeida2004@gmail.com',
+  );
+
+  launchUrl(emailLaunchUri);
+}
 
 buildStandardDrawer(context) => Drawer(
       child: Column(

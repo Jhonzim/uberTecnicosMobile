@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tech_share/editar_perfil.dart';
 import 'package:tech_share/no_login/landing_page.dart';
+import 'package:tech_share/privacy_policy.dart';
+import 'package:tech_share/terms_of_service.dart';
 import 'package:tech_share/valores_e_funcoes.dart';
 
 class UserProfile extends StatefulWidget {
@@ -130,7 +132,13 @@ class _UserProfileState extends State<UserProfile> {
                 title: const Text('Termos de serviço'),
                 leading: !isIOS ? const Icon(Icons.insert_drive_file) : const Icon(CupertinoIcons.doc_text),
                 trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
-                onTap: () => setState(() {}),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TermsOfService())),
+              ),
+              ListTile(
+                title: const Text('Política de privacidade'),
+                leading: !isIOS ? const Icon(Icons.contact_page) : const Icon(CupertinoIcons.doc_person),
+                trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PrivacyPolicy())),
               ),
             ],
           ),

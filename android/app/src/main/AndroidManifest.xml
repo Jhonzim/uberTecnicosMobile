@@ -1,5 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tech_share">
+    <!-- Provide required visibility configuration for API level 30(android11+) and above -->
+    <queries>
+        <!-- emails -->
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:scheme="*/*" />
+        </intent>
+        <!-- links -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https"/>
+        </intent>
+    </queries>
    <application
         android:label="Tech Share"
         android:name="${applicationName}"

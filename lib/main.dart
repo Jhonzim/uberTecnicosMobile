@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
 import 'package:tech_share/no_login/landing_page.dart';
 import 'package:tech_share/no_login/onboarding_screen.dart';
+import 'package:tech_share/privacy_policy.dart';
 
 Future<void> main() async {
   //await Firebase.initializeApp
