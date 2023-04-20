@@ -1,6 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:tech_share/no_login/landing_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -42,16 +41,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Image.asset('images/iconeroubado.png',
                             height: MediaQuery.of(context).size.height * 0.30),
                         Column(
-                          children: [
-                            const Text('Seja bem-vindo ao Tech Share!',
+                          children: const [
+                            Text('Seja bem-vindo ao Tech Share!',
                                 style: TextStyle(fontSize: 18)),
                             Padding(
-                              padding: const EdgeInsets.symmetric(
+                              padding: EdgeInsets.symmetric(
                                   vertical: 8.0, horizontal: 16.0),
                               child: Text(
                                 'Nosso objetivo é tanto ofertar oportunidades quanto tornar a sua vida mais fácil.',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.lato(
+                                style: TextStyle(
                                   fontSize: 15,
                                 ),
                               ),
@@ -92,10 +91,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                     Column(
                       children: [
-                        Text(
+                        const Text(
                           'Não se preocupe. No Tech Share, você encontra',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(fontSize: 18),
+                          style: TextStyle(fontSize: 18),
                         ),
                         AnimatedTextKit(
                           animatedTexts: [
@@ -123,19 +122,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Image.asset('images/avaliacoes.png',
                         width: MediaQuery.of(context).size.width * 0.60),
                     Column(
-                      children: [
+                      children: const [
                         Text(
                           'Seu dispositivo está em boas mãos',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(fontSize: 18),
+                          style: TextStyle(fontSize: 18),
                         ),
-                        const SizedBox(height: 5),
+                        SizedBox(height: 5),
                         FractionallySizedBox(
                           widthFactor: 0.9,
                           child: Text(
                             'Seu dispositivo merece os melhores cuidados, e na Tech Share você pode confiar! Os técnicos são avaliados após cada serviço prestado, garantindo a qualidade do atendimento e proporcionando segurança e tranquilidade para o próximo contratante. Conte conosco para resolver seus problemas de informática de forma confiável e eficiente!',
                             textAlign: TextAlign.justify,
-                            style: GoogleFonts.lato(fontSize: 15),
+                            style: TextStyle(fontSize: 15),
                           ),
                         ),
                       ],
@@ -150,19 +149,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
-                      children: [
-                        const Text('Tech Share',
+                      children: const [
+                        Text('Tech Share',
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                         Text(
                           'Com o Tech Share, compartilhe seus problemas tecnológicos e\nencontre a solução com um técnico especializado!',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(fontSize: 15, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 10),
                         Text(
                           'E então, está pronto?',
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.lato(fontSize: 18),
+                          style: TextStyle(fontSize: 18),
                         ),
                       ],
                     ),
@@ -183,10 +182,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Image.asset('images/1_1.png'),
-                                  Text(
+                                  const Text(
                                       'Busco contratar profissionais',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato()),
+                                      style: TextStyle()),
                                   ElevatedButton(
                                       onPressed: () =>
                                           //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
@@ -214,10 +213,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Image.asset('images/1_1.png'),
-                                  Text(
+                                  const Text(
                                       'Busco novos clientes e contratos a realizar',
                                       textAlign: TextAlign.center,
-                                      style: GoogleFonts.lato()),
+                                      style: TextStyle()),
                                   ElevatedButton(
                                       onPressed: () =>
                                           //TODO: Atualizar o isFirstTime para false e trocar a página navegada para MyApp após atualizado.
@@ -336,7 +335,7 @@ Widget _indicator(bool isActive, int pos, PageController c, context) {
 textoAnimado(String texto) {
   return TypewriterAnimatedText(
     texto,
-    textStyle: GoogleFonts.lato(fontWeight: FontWeight.bold, fontSize: 15),
+    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
     speed: const Duration(milliseconds: 200),
   );
 }

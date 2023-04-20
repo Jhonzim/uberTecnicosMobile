@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_share/user_profile.dart';
+import 'package:tech_share/valores_e_funcoes.dart';
 import 'index.dart';
 import 'teste.dart';
 
@@ -14,7 +17,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     Index(),
     Teste(),
-    Placeholder(),
+    UserProfile(),
   ];
 
   @override
@@ -23,18 +26,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: !isIOS ? const Icon(Icons.home) : const Icon(CupertinoIcons.home),
             label: 'Index',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'PAGINA2',
+            icon: !isIOS ? const Icon(Icons.question_answer) : const Icon(CupertinoIcons.chat_bubble_2),
+            label: 'Conversas',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'PAGINA3',
+            icon: !isIOS ? const Icon(Icons.person) : const Icon(CupertinoIcons.person),
+            label: 'Configurações',
           ),
         ],
         currentIndex: _selectedIndex,

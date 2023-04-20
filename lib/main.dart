@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
 import 'package:tech_share/no_login/landing_page.dart';
-import 'package:tech_share/no_login/login.dart';
 import 'package:tech_share/no_login/onboarding_screen.dart';
 
 Future<void> main() async {
@@ -18,8 +17,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Tech Share',
         theme: ThemeData(
+          fontFamily: 'Lato',
           snackBarTheme:
               const SnackBarThemeData(behavior: SnackBarBehavior.floating),
           primarySwatch: Colors.green,
