@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class EditarPerfil extends StatefulWidget {
-  EditarPerfil({super.key, required this.dadosPerfil});
-  List<String> dadosPerfil = [];
+  EditarPerfil({required dadosPerfil, super.key});
+  final List<String> dadosPerfil = [];
 
   @override
   State<EditarPerfil> createState() => _EditarPerfilState();

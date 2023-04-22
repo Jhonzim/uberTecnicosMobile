@@ -42,6 +42,7 @@ dependencies:
   #connectivity_plus: ^3.0.4 #Checar se há conexão antes de abrir o app
   sizer: ^2.0.15 #tamanho responsivo
   url_launcher: ^6.1.10 #politica de privacidade
+  intl: ^0.18.1 #date format e possivelmente tradução
 
 dev_dependencies:
   flutter_test:

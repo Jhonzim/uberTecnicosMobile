@@ -14,29 +14,59 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
+  PageController pageController = PageController();
+  final List<Widget> pageView = const [Index(), Teste(), UserProfile()];
+
+   @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+  /*static const List<Widget> _widgetOptions = <Widget>[
     Index(),
     Teste(),
     UserProfile(),
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: PageView.builder(
+        controller: pageController,
+        itemBuilder: (BuildContext context, int index) {
+          final bool isCurrentPage = index == _selectedIndex;
+          final double horizontalMargin = isCurrentPage ? 0.0 : 16.0;
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: horizontalMargin),
+            child: pageView[index],
+          );
+        },
+        onPageChanged: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
+      //body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.shifting,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: !isIOS ? const Icon(Icons.home) : const Icon(CupertinoIcons.home),
+            icon: !isIOS
+                ? const Icon(Icons.home)
+                : const Icon(CupertinoIcons.home),
             label: 'Index',
           ),
           BottomNavigationBarItem(
-            icon: !isIOS ? const Icon(Icons.question_answer) : const Icon(CupertinoIcons.chat_bubble_2),
+            icon: !isIOS
+                ? const Icon(Icons.question_answer)
+                : const Icon(CupertinoIcons.chat_bubble_2),
             label: 'Conversas',
           ),
           BottomNavigationBarItem(
-            icon: !isIOS ? const Icon(Icons.person) : const Icon(CupertinoIcons.person),
+            icon: !isIOS
+                ? const Icon(Icons.person)
+                : const Icon(CupertinoIcons.person),
             label: 'Configurações',
           ),
         ],
@@ -45,6 +75,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         selectedItemColor: Colors.green,
         onTap: (index) => setState(() {
           _selectedIndex = index;
+          pageController.jumpToPage(_selectedIndex);
         }),
       ),
     );

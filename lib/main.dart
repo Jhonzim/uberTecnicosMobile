@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:tech_share/bottom_nav_bar.dart';
 import 'package:tech_share/no_login/landing_page.dart';
 import 'package:tech_share/no_login/onboarding_screen.dart';
-import 'package:tech_share/privacy_policy.dart';
+import 'package:tech_share/your_contracts.dart';
 
 Future<void> main() async {
   //await Firebase.initializeApp
@@ -52,12 +52,12 @@ class _CheckInState extends State<CheckIn> {
       true; //usar shared preferences para saber se é ou não a primeira vez no app
   bool isLoggedIn = false; //checar se o usuário está logado
 
-  bool isDevTest = false; //inicializar em pagina para teste
-
+  bool isDevTest = true; //inicializar em pagina para teste
+  //TODO: tornar a bottom nav bar persistente
   @override
   Widget build(BuildContext context) {
     return isDevTest
-        ? const BottomNavBar()
+        ? const YourContracts()
         : isLoggedIn
             ? const BottomNavBar()
             : isFirstTime

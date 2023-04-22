@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:tech_share/your_contracts.dart';
 import 'valores_e_funcoes.dart';
 
 class Index extends StatefulWidget {
@@ -171,7 +172,7 @@ class _IndexState extends State<Index> {
                     ],
                   ),
                   OutlinedButton(
-                    onPressed: () => setState(() {}),
+                    onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const YourContracts(),)),
                     style: ButtonStyle(
                       padding:
                           const MaterialStatePropertyAll(EdgeInsets.all(10)),
