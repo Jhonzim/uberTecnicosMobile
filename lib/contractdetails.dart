@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -16,7 +18,6 @@ class ContractDetails extends StatefulWidget {
 
 class _ContractDetailsState extends State<ContractDetails> {
   bool isFavorite = false;
-  ScrollController scrollUnico = ScrollController(); //TODO:Funcionar
 
   @override
   void initState() {
@@ -42,10 +43,27 @@ class _ContractDetailsState extends State<ContractDetails> {
           widget.contract.requestDate.day + 7);
     }
     return Scaffold(
-        body: Stack(
-      //age como extendbodybehindappbar
-      children: [
-        CustomScrollView(controller: scrollUnico, slivers: [
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  isFavorite = !isFavorite;
+                  isFavorite
+                      ? showSnackBar('Adicionado aos favoritos.', context)
+                      : showSnackBar('Removido dos favoritos.', context);
+                });
+              },
+              icon: isFavorite
+                  ? const Icon(Icons.favorite, color: Colors.red)
+                  : const Icon(Icons.favorite_border),
+            ),
+          ],
+        ),
+        body: CustomScrollView(slivers: [
           SliverToBoxAdapter(
             child: Container(
               color: Colors.red.withOpacity(0.2),
@@ -53,22 +71,43 @@ class _ContractDetailsState extends State<ContractDetails> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                      //ou container com colors.black?
-                      height: 35.h,
-                      child: Hero(
-                        tag: widget.contract.imageLinks[0],
-                        child: Center(
-                          //o tamanho maximo atual é a altura, que não completa caso seja 1 por 1, mudar?
-                          child: Image.network(widget.contract.imageLinks[0],
-                              fit: BoxFit.cover, errorBuilder:
-                                  (BuildContext context, Object exception,
-                                      StackTrace? stackTrace) {
-                            return Image.asset('images/imageNotFound.png',
-                                fit: BoxFit.cover);
-                          }),
+                  Stack(
+                    children: [//todo: fazer um design responsivo
+                      Container(
+                        width: 100.w,
+                        height: 300,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            onError: (exception, stackTrace) => Image.asset('images/imageNotFound.png',
+                                    fit: BoxFit.fitHeight),
+                            image: NetworkImage(widget.contract.imageLinks[0]),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      )),
+                      ),
+                      Container(
+                        width: 100.w,
+                        height: 280,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Hero(
+                            tag: widget.contract.imageLinks[0],
+                            child: Image.network(
+                                widget.contract.imageLinks[0],
+                                fit: BoxFit.cover, errorBuilder:
+                                    (BuildContext context, Object exception,
+                                        StackTrace? stackTrace) {
+                              return Image.asset('images/imageNotFound.png',
+                                  fit: BoxFit.fitHeight);
+                            }),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   Align(
                     //apenas para a fractionallysizedbox funcionar
                     child: FractionallySizedBox(
@@ -175,37 +214,6 @@ class _ContractDetailsState extends State<ContractDetails> {
               ),
             ),
           ),
-        ]),
-        CustomScrollView(
-          controller: scrollUnico,
-          slivers: [
-            SliverAppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              floating: true,
-              actions: [
-                IconButton(
-                    onPressed: () => setState(() {
-                          isFavorite = !isFavorite;
-                          isFavorite
-                              ? showSnackBar(
-                                  'Adicionado aos favoritos.', context)
-                              : showSnackBar(
-                                  'Removido dos favoritos.', context);
-                        }),
-                    icon: !isIOS
-                        ? isFavorite
-                            ? const Icon(Icons.favorite, color: Colors.red)
-                            : const Icon(Icons.favorite_border)
-                        : isFavorite
-                            ? const Icon(CupertinoIcons.heart_fill,
-                                color: Colors.red)
-                            : const Icon(CupertinoIcons.heart))
-              ],
-            ),
-          ],
-        ),
-      ],
-    ));
+        ]));
   }
 }

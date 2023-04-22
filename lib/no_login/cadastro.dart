@@ -8,7 +8,9 @@ import 'package:tech_share/valores_e_funcoes.dart';
 
 class Cadastro extends StatefulWidget {
   final bool? comesFromLogin;
-  const Cadastro({Key? key, this.comesFromLogin}) : super(key: key);
+  final bool? isTecnico;
+  const Cadastro({Key? key, this.comesFromLogin, this.isTecnico})
+      : super(key: key);
 
   @override
   State<Cadastro> createState() => _CadastroState();
@@ -25,12 +27,18 @@ class _CadastroState extends State<Cadastro> {
       TextEditingController(text: 'Selecione um ou mais certificados');
 
   bool isPasswordInvisible = true;
-  bool isTecnico = false;
+  late bool isTecnico;
 
   FilePickerResult? result;
   PlatformFile? pickedFile;
   File? fileToDisplay;
   List<File> selectedFilesPaths = [];
+
+  @override
+  void initState() {
+    isTecnico = widget.isTecnico ?? false;
+    super.initState();
+  }
 
   void pickFile() async {
     try {
@@ -95,7 +103,7 @@ class _CadastroState extends State<Cadastro> {
       },
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,18 +115,20 @@ class _CadastroState extends State<Cadastro> {
           actions: [
             IconButton(
                 onPressed: () => setState(() {
-                      showSnackBar(isTecnico
-                          ? 'Trocou para cadastro de usuário comum'
-                          : 'Trocou para cadastro de usuário técnico', context);
+                      showSnackBar(
+                          isTecnico
+                              ? 'Trocou para cadastro de usuário comum'
+                              : 'Trocou para cadastro de usuário técnico',
+                          context);
                       isTecnico = !isTecnico;
                     }),
-                icon: isTecnico 
-                ? const Tooltip(
-                  message: 'Trocar para cadastro comum',
-                  child: Icon(Icons.handyman_rounded))
-                : const Tooltip(
-                  message: 'Trocar para cadastro técnico',
-                  child: Icon(Icons.person)))
+                icon: isTecnico
+                    ? const Tooltip(
+                        message: 'Trocar para cadastro comum',
+                        child: Icon(Icons.handyman_rounded))
+                    : const Tooltip(
+                        message: 'Trocar para cadastro técnico',
+                        child: Icon(Icons.person)))
           ],
         ),
         SliverFillRemaining(
@@ -335,7 +345,9 @@ class _CadastroState extends State<Cadastro> {
                                                       ? null
                                                       : erros;
                                                 }
-                                                return erros.isEmpty ? null : erros;
+                                                return erros.isEmpty
+                                                    ? null
+                                                    : erros;
                                               },
                                         readOnly: true,
                                         controller: qtdCertificados,
@@ -446,4 +458,3 @@ class PhoneNumberInputFormatter extends TextInputFormatter {
     return formattedPhoneNumber;
   }
 }
-

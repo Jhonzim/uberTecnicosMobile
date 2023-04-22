@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:tech_share/no_login/cadastro.dart';
 import 'package:tech_share/no_login/landing_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -47,7 +48,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Image.asset('images/iconeroubado.png',
-                            height: MediaQuery.of(context).size.height * 0.30),
+                            height: 200),
                         Column(
                           children: const [
                             Text('Seja bem-vindo ao Tech Share!',
@@ -88,12 +89,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             fontSize: 80.0,
                             fontWeight: FontWeight.bold,
                           ),
-                          boxHeight: MediaQuery.of(context).size.height * 0.25,
-                          boxWidth: MediaQuery.of(context).size.height * 0.30,
+                          boxHeight: 220,
+                          boxWidth: 220,
                         ),
                         Image.asset(
                           'images/DeuRuim.png',
-                          height: MediaQuery.of(context).size.height * 0.40,
+                          height: 250,
                         ), //fonte Akshar no google fonts
                       ],
                     ),
@@ -128,7 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Image.asset('images/avaliacoes.png',
-                        width: MediaQuery.of(context).size.width * 0.60),
+                        height: 90),
                     Column(
                       children: const [
                         Text(
@@ -189,7 +190,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset('images/1_1.png'),
+                                  Image.asset('images/soucliente.png'),
                                   const Text(
                                       'Busco contratar profissionais',
                                       textAlign: TextAlign.center,
@@ -201,7 +202,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                               .pushAndRemoveUntil(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const LandingPage()),
+                                                          const Cadastro(isTecnico: false)),
                                                   (Route route) => false),
                                       child: const Text('Sou cliente'))
                                 ],
@@ -220,7 +221,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset('images/1_1.png'),
+                                  Image.asset('images/souprofissional.png'),
                                   const Text(
                                       'Busco novos clientes e contratos a realizar',
                                       textAlign: TextAlign.center,
@@ -232,7 +233,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                               .pushAndRemoveUntil(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const LandingPage()),
+                                                          const Cadastro(isTecnico: true)),
                                                   (Route route) => false),
                                       child: const Text('Sou profissional'))
                                 ],

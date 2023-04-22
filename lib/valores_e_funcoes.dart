@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:tech_share/privacy_policy.dart';
+import 'package:tech_share/terms_of_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 bool isIOS = Platform.isIOS;
@@ -139,138 +141,159 @@ sendEmail() {
 }
 
 buildStandardDrawer(context) => Drawer(
-      child: Column(
+      child: ListView(
+        padding: EdgeInsets.zero,
         children: [
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                Stack(
+          Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  image: DecorationImage(
+                    image: NetworkImage(usuario['imagemfundo'].toString()),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                height: MediaQuery.of(context).size.height * 0.18,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        image: DecorationImage(
-                          image:
-                              NetworkImage(usuario['imagemfundo'].toString()),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      height: MediaQuery.of(context).size.height * 0.18,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                              height:
-                                  MediaQuery.of(context).size.height * 0.12),
-                          CircleAvatar(
-                            radius: 52.0,
-                            backgroundColor: Colors.green,
-                            child: CircleAvatar(
-                              radius: 50.0,
-                              backgroundImage:
-                                  NetworkImage(usuario['imagem'].toString()),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ),
-                          Text(usuario['nome'].toString(),
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 18)),
-                          Text(usuario['isTecnico'] == true
-                              ? 'Usuário técnico'
-                              : 'Usuário comum'),
-                        ],
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                    CircleAvatar(
+                      radius: 52.0,
+                      backgroundColor: Colors.green,
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        backgroundImage:
+                            NetworkImage(usuario['imagem'].toString()),
+                        backgroundColor: Colors.transparent,
                       ),
                     ),
+                    Text(usuario['nome'].toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 18)),
+                    Text(usuario['isTecnico'] == true
+                        ? 'Usuário técnico'
+                        : 'Usuário comum'),
                   ],
                 ),
-                usuario['isTecnico'] != true
-                    ? ListTile(
-                        leading: const Icon(Icons.add_circle),
-                        title: const Text('Criar contratos'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    : const SizedBox(),
-                ListTile(
-                  leading: const Icon(Icons.date_range),
-                  title: Text(usuario['isTecnico'] != true
-                      ? 'Contratos aceitos'
-                      : 'Contratos criados'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                usuario['isTecnico'] == true
-                    ? ListTile(
-                        leading: const Icon(Icons.bookmark),
-                        title: const Text('Contratos salvos'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    : const SizedBox(),
-                usuario['isTecnico'] == true
-                    ? ListTile(
-                        leading: const Icon(Icons.access_time),
-                        title: const Text('Recentes'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    : const SizedBox(),
-                ListTile(
-                  leading: const Icon(Icons.info),
-                  title: const Text('Sobre nós'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Container(
-            decoration: BoxDecoration(color: Colors.black.withAlpha(50)),
-            height: MediaQuery.of(context).size.height * 0.09,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
+          const ListTile(
+            subtitle: Text('CONTRATOS'),
+          ),
+          usuario['isTecnico'] != true
+              ? ListTile(
+                  leading: const Icon(Icons.add_circle),
+                  title: const Text('Criar contratos'),
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.settings),
-                      Text('Configurações', style: TextStyle(fontSize: 16))
+                )
+              : const SizedBox(),
+          usuario['isTecnico'] != true
+              ? ListTile(
+                  leading: const Icon(Icons.list),
+                  title: const Text('Contratos criados'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                )
+              : ListTile(
+                  leading: const Icon(Icons.event),
+                  title: const Text('Contratos aceitos'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+          usuario['isTecnico'] == true
+              ? ListTile(
+                  leading: const Icon(Icons.favorite),
+                  title: const Text('Contratos salvos'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                )
+              : const SizedBox(),
+          usuario['isTecnico'] == true
+              ? ListTile(
+                  leading: const Icon(Icons.access_time),
+                  title: const Text('Recentes'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                )
+              : const SizedBox(),
+          const ListTile(
+            subtitle: Text('DETALHES'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: const Text('Sobre nós'),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                title: Row(
+                  children: [
+                    Image.asset('images/iconeroubado.png', height: 50),
+                    const SizedBox(width: 10),
+                    Wrap(
+                      direction: Axis.vertical,
+                        children: const [
+                          Text('Tech Share', style: TextStyle(fontSize: 18)),
+                          Text('1.0.0', style: TextStyle(fontSize: 12)),
+                          Text('© 2023 Amanhã eu faço, confia', style: TextStyle(fontSize: 11, color: Colors.black45)),
+                        ],
+                      ),
+                  ],
+                ),
+                  content: Wrap(
+                    children: [
+                      const Text('Agradecemos por escolher o aplicativo Tech Share para solucionar problemas relacionados à tecnologia e compartilhar conhecimentos com a comunidade. Esperamos que você tenha encontrado valor em nossa plataforma e continue a explorar e contribuir com nosso conteúdo. Nosso objetivo é fornecer uma experiência agradável e enriquecedora, e agradecemos por fazer parte da nossa comunidade.',
+                      textAlign: TextAlign.justify),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const TermsOfService())),
+                            child: const Text(
+                              'Termos de uso',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const PrivacyPolicy())),
+                            child: const Text(
+                              'Política de privacidade',
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => showLicensePage(context: context),
+                      child: const Text('VER LICENSAS')),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('FECHAR')),
+                  ],
                 ),
-                const VerticalDivider(
-                  thickness: 0.5,
-                  width: 0,
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(Icons.logout),
-                      Text('Sair da Conta', style: TextStyle(fontSize: 16))
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )
+              );
+            },
+          ),
         ],
       ),
     );
@@ -371,7 +394,7 @@ class Contract {
     ),
     Contract(
       imageLinks: [
-        'semimagem'
+        'semimagem',
         'https://adding.info/image/ratio-rectangle/ratio-of-4-to-1-rectangle.png'
       ],
       title: 'Title',

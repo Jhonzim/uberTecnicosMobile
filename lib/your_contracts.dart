@@ -12,8 +12,25 @@ class YourContracts extends StatefulWidget {
   State<YourContracts> createState() => _YourContractsState();
 }
 
-class _YourContractsState extends State<YourContracts> {
+class _YourContractsState extends State<YourContracts>
+    with SingleTickerProviderStateMixin {
+
+  late AnimationController animation;
   bool isGrid = false;
+
+  @override
+  void initState() {
+    animation = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animation.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +41,12 @@ class _YourContractsState extends State<YourContracts> {
           actions: [
             IconButton(
                 onPressed: () => setState(() {
+                      isGrid ? animation.reverse() : animation.forward();
                       isGrid = !isGrid;
                     }),
                 icon: !isIOS
-                    ? isGrid
-                        ? const Icon(Icons.grid_view_rounded)
-                        : const Icon(Icons.view_list_rounded)
+                    ? AnimatedIcon(
+                        progress: animation, icon: AnimatedIcons.list_view)
                     : isGrid
                         ? const Icon(CupertinoIcons.square_grid_2x2)
                         : const Icon(CupertinoIcons.list_bullet))
@@ -39,141 +56,56 @@ class _YourContractsState extends State<YourContracts> {
         SliverPadding(
           padding: EdgeInsets.only(top: 1.h),
           sliver: SliverList(
-            delegate: SliverChildListDelegate(List.generate(Contract.contracts.length, (index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: /*InkWell(
-                  onTap: () => setState(() {
-                    
-                  }),
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    elevation: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Ink.image(
-                            image: const AssetImage(
-                              'images/1_1.png',
-                            ),
-                            width: 20.w,
-                            height: 20.w,
-                            fit: BoxFit.cover
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(Contract.contracts[index].title),
-                              Text(Contract.contracts[index].description, maxLines: 2, overflow: TextOverflow.ellipsis,),
-                              Text(Contract.contracts[index].city),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron)
-                        )
-                      ],
-                    ),
-                            ),
-                ),*/Card(
-                  child: ListTile(
-                    leading: Hero(
-                      tag: Contract.contracts[index].imageLinks[0],
-                      child: Expanded(
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: Image.network(
-                            Contract.contracts[index].imageLinks[0],
-                            fit: BoxFit.cover,
-                            errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                              return Image.asset('images/imageNotFound.png',
+              delegate: SliverChildListDelegate(
+                  List.generate(Contract.contracts.length, (index) {
+            return Card(
+              child: ListTile(
+                leading: Hero(
+                  tag: Contract.contracts[index].imageLinks[0],
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5)
+                      ),
+                      child: Image.network(
+                        Contract.contracts[index].imageLinks[0],
+                        height: double.maxFinite,
+                        fit: BoxFit.cover,
+                        errorBuilder: (BuildContext context, Object exception,
+                            StackTrace? stackTrace) {
+                          return Image.asset('images/imageNotFound.png',
                               fit: BoxFit.cover);
-                            },
-                          ),
-                        ),
+                        },
                       ),
                     ),
-                    title: RichText(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      text: TextSpan(
-                          text: '${Contract.contracts[index].title}\n',
-                          style: TextStyle(
-                            color: Theme.of(context).textTheme.bodyLarge?.color,
-                            fontSize: 16
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(text: Contract.contracts[index].description,
-                              style: const TextStyle(
-                                fontSize: 14
-                              )
-                            )
-                          ]
-                      ),
-                    ),
-                    subtitle: Text(Contract.contracts[index].city),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContractDetails(contract: Contract.contracts[index],))),
                   ),
                 ),
-              );
-            }))),
+                title: RichText(
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                      text: '${Contract.contracts[index].title}\n',
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                          fontSize: 16),
+                      children: <TextSpan>[
+                        TextSpan(
+                            text: Contract.contracts[index].description,
+                            style: const TextStyle(fontSize: 14))
+                      ]),
+                ),
+                subtitle: Text(Contract.contracts[index].city),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ContractDetails(
+                          contract: Contract.contracts[index],
+                        ))),
+              ),
+            );
+          }))),
         ),
       ],
     ));
   }
 }
-
-/*
-InkWell(
-                  onTap: () => setState(() {
-                    
-                  }),
-                  child: Card(
-                    clipBehavior: Clip.hardEdge,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    elevation: 4,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Ink.image(
-                            image: const AssetImage(
-                              'images/1_1.png',
-                            ),
-                            width: 20.w,
-                            height: 20.w,
-                            fit: BoxFit.cover
-                          ),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(Contract.contracts[index].title),
-                              Text(Contract.contracts[index].description, maxLines: 2, overflow: TextOverflow.ellipsis,),
-                              Text(Contract.contracts[index].city),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron)
-                        )
-                      ],
-                    ),
-                            ),
-                ),
- */

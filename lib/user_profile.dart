@@ -32,27 +32,106 @@ class _UserProfileState extends State<UserProfile> {
             children: [
               SizedBox(height: 1.h),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Container(
                   padding: const EdgeInsets.all(8.0),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.5),
-                    borderRadius: BorderRadius.circular(20)
-                  ),
+                      color: Colors.green.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(20)),
                   child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(usuario['imagem'].toString()),
+                      leading: CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(usuario['imagem'].toString()),
+                      ),
+                      title: Text(usuario['nome'].toString()),
+                      trailing: IconButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditarPerfil(
+                                        dadosPerfil: [
+                                          usuario['nome'].toString(),
+                                          usuario['imagemfundo'].toString()
+                                        ]))),
+                        icon: !isIOS
+                            ? const Icon(Icons.edit)
+                            : const Icon(CupertinoIcons.pencil),
+                      )),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          border: Border.all(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .color!
+                                  .withOpacity(0.2),
+                              width: 1)),
+                      child: ListTile(
+                        onTap: () => setState(() {}),
+                        leading: !isIOS
+                            ? const Icon(Icons.lock)
+                            : const Icon(CupertinoIcons.lock),
+                        title: const Text('Mudar senha'),
+                        trailing: !isIOS
+                            ? const Icon(Icons.keyboard_arrow_right)
+                            : const Icon(CupertinoIcons.right_chevron),
+                      ),
                     ),
-                    title: Text(usuario['nome'].toString()),
-                    trailing: IconButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditarPerfil(
-                        dadosPerfil: [
-                          usuario['nome'].toString(),
-                          usuario['imagemfundo'].toString()
-                        ]))),
-                      icon: !isIOS ? const Icon(Icons.edit) : const Icon(CupertinoIcons.pencil),
-                    )
-                  ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          border: Border.all(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .color!
+                                  .withOpacity(0.2),
+                              width: 1)),
+                      child: ListTile(
+                        onTap: () => setState(() {}),
+                        leading: !isIOS
+                            ? const Icon(Icons.person_pin_rounded)
+                            : const Icon(CupertinoIcons.person_crop_square),
+                        title: const Text('Mudar outra coisa sei lá'),
+                        trailing: !isIOS
+                            ? const Icon(Icons.keyboard_arrow_right)
+                            : const Icon(CupertinoIcons.right_chevron),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(20)),
+                          border: Border.all(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .color!
+                                  .withOpacity(0.2),
+                              width: 1)),
+                      child: ListTile(
+                        onTap: () => setState(() {}),
+                        leading: !isIOS
+                            ? const Icon(Icons.lock)
+                            : const Icon(CupertinoIcons.lock),
+                        title: const Text('Atualizar dados'),
+                        trailing: !isIOS
+                            ? const Icon(Icons.keyboard_arrow_right)
+                            : const Icon(CupertinoIcons.right_chevron),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const ListTile(
@@ -61,38 +140,46 @@ class _UserProfileState extends State<UserProfile> {
               ),
               ListTile(
                 title: const Text('Notificações'),
-                leading: !isIOS ? const Icon(Icons.notifications) : const Icon(CupertinoIcons.bell),
+                leading: !isIOS
+                    ? const Icon(Icons.notifications)
+                    : const Icon(CupertinoIcons.bell),
                 onTap: () => setState(() {
                   isTrue = !isTrue;
                 }),
-                trailing: !isIOS ? Switch(
-                  value: isTrue,
-                  onChanged: (value) => setState(() {
-                    isTrue = !isTrue;
-                  })) : CupertinoSwitch(
-                  value: isTrue,
-                  onChanged: (value) => setState(() {
-                    isTrue = !isTrue;
-                  }),
-                ),
+                trailing: !isIOS
+                    ? Switch(
+                        value: isTrue,
+                        onChanged: (value) => setState(() {
+                              isTrue = !isTrue;
+                            }))
+                    : CupertinoSwitch(
+                        value: isTrue,
+                        onChanged: (value) => setState(() {
+                          isTrue = !isTrue;
+                        }),
+                      ),
               ),
               ListTile(
                 title: const Text('Tema escuro'),
-                leading: !isIOS ? const Icon(Icons.brightness_2) : const Icon(CupertinoIcons.moon),
+                leading: !isIOS
+                    ? const Icon(Icons.brightness_2)
+                    : const Icon(CupertinoIcons.moon),
                 onTap: () => setState(() {
                   isTrue2 = !isTrue2;
                 }),
-                trailing: !isIOS ? Switch(
-                  value: isTrue2,
-                  onChanged: (value) => setState(() {
-                    isTrue2 = !isTrue2;
-                  }),
-                ) : CupertinoSwitch(
-                  value: isTrue2,
-                  onChanged: (value) => setState(() {
-                    isTrue2 = !isTrue2;
-                  }),
-                ),
+                trailing: !isIOS
+                    ? Switch(
+                        value: isTrue2,
+                        onChanged: (value) => setState(() {
+                          isTrue2 = !isTrue2;
+                        }),
+                      )
+                    : CupertinoSwitch(
+                        value: isTrue2,
+                        onChanged: (value) => setState(() {
+                          isTrue2 = !isTrue2;
+                        }),
+                      ),
               ),
               const ListTile(
                 subtitle: Text('CONTA',
@@ -102,25 +189,36 @@ class _UserProfileState extends State<UserProfile> {
               ),
               ListTile(
                 title: const Text('Detalhes da conta'),
-                leading: !isIOS ? const Icon(Icons.mail) : const Icon(CupertinoIcons.mail),
-                trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => EditarPerfil(
-                  dadosPerfil: [
-                    usuario['nome'].toString(),
-                    usuario['imagemfundo'].toString()
-                  ]))),
+                leading: !isIOS
+                    ? const Icon(Icons.mail)
+                    : const Icon(CupertinoIcons.mail),
+                trailing: !isIOS
+                    ? const Icon(Icons.keyboard_arrow_right)
+                    : const Icon(CupertinoIcons.right_chevron),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditarPerfil(dadosPerfil: [
+                              usuario['nome'].toString(),
+                              usuario['imagemfundo'].toString()
+                            ]))),
               ),
               ListTile(
                 title: const Text('Sair da conta'),
-                leading: !isIOS ? const Icon(Icons.logout) : const Icon(CupertinoIcons.square_arrow_right),
-                trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
+                leading: !isIOS
+                    ? const Icon(Icons.logout)
+                    : const Icon(CupertinoIcons.square_arrow_right),
+                trailing: !isIOS
+                    ? const Icon(Icons.keyboard_arrow_right)
+                    : const Icon(CupertinoIcons.right_chevron),
                 onTap: () {
-                        //TODO: Implementar logout
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => const LandingPage()),
-                            (Route route) => false);
-                            showSnackBar('Logout realizado com sucesso.', context);
-                      },
+                  //TODO: Implementar logout
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const LandingPage()),
+                      (Route route) => false);
+                  showSnackBar('Logout realizado com sucesso.', context);
+                },
               ),
               const ListTile(
                 subtitle: Text('MISCELÂNEO',
@@ -130,15 +228,29 @@ class _UserProfileState extends State<UserProfile> {
               ),
               ListTile(
                 title: const Text('Termos de serviço'),
-                leading: !isIOS ? const Icon(Icons.insert_drive_file) : const Icon(CupertinoIcons.doc_text),
-                trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const TermsOfService())),
+                leading: !isIOS
+                    ? const Icon(Icons.insert_drive_file)
+                    : const Icon(CupertinoIcons.doc_text),
+                trailing: !isIOS
+                    ? const Icon(Icons.keyboard_arrow_right)
+                    : const Icon(CupertinoIcons.right_chevron),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TermsOfService())),
               ),
               ListTile(
                 title: const Text('Política de privacidade'),
-                leading: !isIOS ? const Icon(Icons.contact_page) : const Icon(CupertinoIcons.doc_person),
-                trailing: !isIOS ? const Icon(Icons.keyboard_arrow_right) : const Icon(CupertinoIcons.right_chevron),
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const PrivacyPolicy())),
+                leading: !isIOS
+                    ? const Icon(Icons.contact_page)
+                    : const Icon(CupertinoIcons.doc_person),
+                trailing: !isIOS
+                    ? const Icon(Icons.keyboard_arrow_right)
+                    : const Icon(CupertinoIcons.right_chevron),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PrivacyPolicy())),
               ),
             ],
           ),

@@ -57,7 +57,7 @@ class _CheckInState extends State<CheckIn> {
   @override
   Widget build(BuildContext context) {
     return isDevTest
-        ? const YourContracts()
+        ? const BottomNavBar()
         : isLoggedIn
             ? const BottomNavBar()
             : isFirstTime
