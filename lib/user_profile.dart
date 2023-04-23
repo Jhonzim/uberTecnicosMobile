@@ -34,37 +34,86 @@ class _UserProfileState extends State<UserProfile> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: ListTile(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: Colors.green.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: ExpansionTile(
                       leading: CircleAvatar(
                         backgroundImage:
                             NetworkImage(usuario['imagem'].toString()),
                       ),
                       title: Text(usuario['nome'].toString()),
-                      trailing: IconButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditarPerfil(
-                                        dadosPerfil: [
-                                          usuario['nome'].toString(),
-                                          usuario['imagemfundo'].toString()
-                                        ]))),
-                        icon: !isIOS
-                            ? const Icon(Icons.edit)
-                            : const Icon(CupertinoIcons.pencil),
-                      )),
-                ),
+                      children: [
+                        const ExpansionTile(
+                          leading: Icon(Icons.person_pin),
+                          title: Text('Dados da conta'),
+                          children: [
+                            Text(
+                                'Usuário comum'), //Todo: mudar usuario de map para controller e mostrar aq
+                            Text('Contratos postados: 1'),
+                            Text('Contratos finalizados: 0'),
+                            Text('Contratos expirados: 0'),
+                            Text('Usuário Técnico'),
+                            Text('Certificado(s): 3'),
+                            Text('Contratos realizados: 3'),
+                            Text('Média das avaliações: 5/5'),
+                            Divider(),
+                            Text('Francisco alves de Freitas Neto'),
+                            Text('francisco.freitas@gmail.com'),
+                            Text('(22) 98861-8212'),
+                            Text('Bom Jesus do Itabapoana'),
+                            Text('Rua General Ozório, Número 258'),
+                          ],
+                        ),
+                        ListTile(
+                          onTap: () => setState(() {}),
+                          leading: !isIOS
+                              ? const Icon(Icons.lock)
+                              : const Icon(CupertinoIcons.lock),
+                          title: const Text('Mudar senha'),
+                          trailing: !isIOS
+                              ? const Icon(Icons.keyboard_arrow_right)
+                              : const Icon(CupertinoIcons.right_chevron),
+                        ),
+                        ListTile(
+                          onTap: () => setState(() {}),
+                          leading: !isIOS
+                              ? const Icon(Icons.person_pin_rounded)
+                              : const Icon(CupertinoIcons.person_crop_square),
+                          title: const Text('Mudar outra coisa sei lá'),
+                          trailing: !isIOS
+                              ? const Icon(Icons.keyboard_arrow_right)
+                              : const Icon(CupertinoIcons.right_chevron),
+                        ),
+                        ListTile(
+                          onTap: () => setState(() {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => EditarPerfil(
+                                            dadosPerfil: [
+                                              usuario['nome'].toString(),
+                                              usuario['imagemfundo'].toString()
+                                            ])));
+                          }),
+                          leading: !isIOS
+                              ? const Icon(Icons.edit)
+                              : const Icon(CupertinoIcons.pencil),
+                          title: const Text('Atualizar dados'),
+                          trailing: !isIOS
+                              ? const Icon(Icons.keyboard_arrow_right)
+                              : const Icon(CupertinoIcons.right_chevron),
+                        ),
+                      ],
+                    )),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                padding: const EdgeInsets.only(top: 8, left: 25, right: 25),
                 child: Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           border: Border.all(
@@ -86,7 +135,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           border: Border.all(
@@ -108,7 +157,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           borderRadius: const BorderRadius.vertical(
