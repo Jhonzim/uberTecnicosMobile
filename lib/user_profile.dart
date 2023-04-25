@@ -45,25 +45,19 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       title: Text(usuario['nome'].toString()),
                       children: [
-                        const ExpansionTile(
-                          leading: Icon(Icons.person_pin),
-                          title: Text('Dados da conta'),
+                        ExpansionTile(
+                          leading: !isIOS ? const Icon(Icons.person_pin) : const Icon(CupertinoIcons.person_crop_circle),
+                          title: const Text('Dados da conta'),
                           children: [
-                            Text(
-                                'Usuário comum'), //Todo: mudar usuario de map para controller e mostrar aq
-                            Text('Contratos postados: 1'),
-                            Text('Contratos finalizados: 0'),
-                            Text('Contratos expirados: 0'),
-                            Text('Usuário Técnico'),
-                            Text('Certificado(s): 3'),
-                            Text('Contratos realizados: 3'),
-                            Text('Média das avaliações: 5/5'),
-                            Divider(),
-                            Text('Francisco alves de Freitas Neto'),
+                            usuario['isTecnico'] == true ? const Text('Usuário Técnico') : const Text('Usuário comum'),
+                            usuario['isTecnico'] == true ? const Text('Certificado(s): 3') : const Text('Contratos postados: 1'),
+                            usuario['isTecnico'] == true ? const Text('Contratos realizados: 3') : const Text('Contratos finalizados: 0'),
+                            usuario['isTecnico'] == true ? const Text('Média das avaliações: 5/5') : const Text('Contratos expirados: 0'),
+                            const Divider(),
+                            Text(usuario['nome'].toString()),
                             Text('francisco.freitas@gmail.com'),
                             Text('(22) 98861-8212'),
                             Text('Bom Jesus do Itabapoana'),
-                            Text('Rua General Ozório, Número 258'),
                           ],
                         ),
                         ListTile(
@@ -107,81 +101,6 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ],
                     )),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 25, right: 25),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          border: Border.all(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .color!
-                                  .withOpacity(0.2),
-                              width: 1)),
-                      child: ListTile(
-                        onTap: () => setState(() {}),
-                        leading: !isIOS
-                            ? const Icon(Icons.lock)
-                            : const Icon(CupertinoIcons.lock),
-                        title: const Text('Mudar senha'),
-                        trailing: !isIOS
-                            ? const Icon(Icons.keyboard_arrow_right)
-                            : const Icon(CupertinoIcons.right_chevron),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          border: Border.all(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .color!
-                                  .withOpacity(0.2),
-                              width: 1)),
-                      child: ListTile(
-                        onTap: () => setState(() {}),
-                        leading: !isIOS
-                            ? const Icon(Icons.person_pin_rounded)
-                            : const Icon(CupertinoIcons.person_crop_square),
-                        title: const Text('Mudar outra coisa sei lá'),
-                        trailing: !isIOS
-                            ? const Icon(Icons.keyboard_arrow_right)
-                            : const Icon(CupertinoIcons.right_chevron),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4.0),
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          borderRadius: const BorderRadius.vertical(
-                              bottom: Radius.circular(20)),
-                          border: Border.all(
-                              color: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .color!
-                                  .withOpacity(0.2),
-                              width: 1)),
-                      child: ListTile(
-                        onTap: () => setState(() {}),
-                        leading: !isIOS
-                            ? const Icon(Icons.lock)
-                            : const Icon(CupertinoIcons.lock),
-                        title: const Text('Atualizar dados'),
-                        trailing: !isIOS
-                            ? const Icon(Icons.keyboard_arrow_right)
-                            : const Icon(CupertinoIcons.right_chevron),
-                      ),
-                    ),
-                  ],
-                ),
               ),
               const ListTile(
                 subtitle: Text('CONFIGURAÇÕES DO APLICATIVO',

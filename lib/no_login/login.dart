@@ -31,12 +31,12 @@ class _LoginState extends State<Login> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Wrap(
-                children: [
-                  const SizedBox(height: 5),
-                  FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: TextField(
+              FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Wrap(
+                  children: [
+                    const SizedBox(height: 5),
+                    TextField(
                       controller: emailCtrl,
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.mail),
@@ -46,11 +46,8 @@ class _LoginState extends State<Login> {
                       keyboardType: TextInputType.emailAddress,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                  FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: TextField(
+                    const SizedBox(height: 5),
+                    TextField(
                       controller: senhaCtrl,
                       decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.key),
@@ -67,22 +64,49 @@ class _LoginState extends State<Login> {
                       autocorrect: false,
                       maxLengthEnforcement: MaxLengthEnforcement.enforced,
                     ),
-                  ),
-                  FractionallySizedBox(
-                    widthFactor: 0.9,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        //TODO: Implementar login
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(builder: (context) => const BottomNavBar()),
-                            (Route route) => false);
-                            showSnackBar('Login realizado com sucesso.', context);
-                      },
-                      child: const Text('ENTRAR'),
+                    FractionallySizedBox(
+                      widthFactor: 1,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          //TODO: Implementar login
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (context) => const BottomNavBar()),
+                              (Route route) => false);
+                              showSnackBar('Login realizado com sucesso.', context);
+                        },
+                        child: const Text('ENTRAR'),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5),
-                ],
+                  ],
+                ),
+              ),
+              FractionallySizedBox(
+                widthFactor: 0.9,
+                child: Column(
+                  children: [
+                    const Text('Ou também'),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColorLight),
+                        elevation: const MaterialStatePropertyAll(10),
+                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ))
+                      ),
+                      onPressed: () {
+                        //TODO: Implementar login com google
+                        showSnackBar('Login com google realizado com sucesso.', context);
+                      },
+                      child: ListTile(
+                        leading: Image.network('https://www.transparentpng.com/thumb/google-logo/shady-google-logo-pictures-png-free-BjH4wQ.png',
+                          height: 40),
+                        title: const Center(child: Text('ENTRAR COM GOOGLE')),
+                        trailing: const SizedBox(),
+                      )
+                    ),
+                  ],
+                ),
               ),
               Column(
                 children: [

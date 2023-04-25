@@ -3,6 +3,7 @@ import 'package:all_validations_br/all_validations_br.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tech_share/no_login/landing_page.dart';
 import 'package:tech_share/no_login/login.dart';
 import 'package:tech_share/valores_e_funcoes.dart';
 
@@ -95,6 +96,10 @@ class _CadastroState extends State<Cadastro> {
               child: const Text('SIM'),
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const LandingPage()),
+                    (Route route) => false);
                 showSnackBar('Cadastrou-se como técnico', context);
               },
             ),
@@ -133,271 +138,297 @@ class _CadastroState extends State<Cadastro> {
         ),
         SliverFillRemaining(
           child: SingleChildScrollView(
-            child: Form(
-                key: formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    FractionallySizedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Form(
+                    key: formKey,
+                    child: FractionallySizedBox(
                       widthFactor: 0.9,
-                      child: TextFormField(
-                        controller: cpfCtrl,
-                        inputFormatters: [CpfInputFormatter()],
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.account_circle),
-                          label: Text('CPF'),
-                          hintText: '123.456.789-00',
-                        ),
-                        keyboardType: TextInputType.number,
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        validator: (String? value) {
-                          String erros = '';
-                          List<bool> erroAnterior = [false];
-                          if (value == null || value.isEmpty || value == ' ') {
-                            erros += 'Campos vazios não são aceitos';
-                            erroAnterior[0] = true;
-                          }
-                          if (!AllValidations.isCpf(value!)) {
-                            erros += erroAnterior[0] ? '\n' : '';
-                            erros += 'Insira um CPF válido';
-                          }
-                          return erros.isEmpty ? null : erros;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: TextFormField(
-                        controller: emailCtrl,
-                        decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.mail),
-                          label: Text('E-mail'),
-                          hintText: 'exemplo@exemplo.com',
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        validator: (String? value) {
-                          String erros = '';
-                          List<bool> erroAnterior = [false];
-                          if (value == null || value.isEmpty || value == ' ') {
-                            erros += 'Campos vazios não são aceitos';
-                            erroAnterior[0] = true;
-                          }
-                          if (!AllValidations.isEmail(value!)) {
-                            erros += erroAnterior[0] ? '\n' : '';
-                            erros += 'Insira um e-mail válido';
-                          }
-                          return erros.isEmpty ? null : erros;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: TextFormField(
-                        controller: senhaCtrl,
-                        decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.key),
-                            label: const Text('Senha'),
-                            suffixIcon: IconButton(
-                                icon: isPasswordInvisible
-                                    ? const Icon(Icons.visibility)
-                                    : const Icon(Icons.visibility_off_outlined),
-                                onPressed: () => setState(() {
-                                      isPasswordInvisible =
-                                          !isPasswordInvisible;
-                                    }))),
-                        obscureText: isPasswordInvisible,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        validator: (String? value) {
-                          String erros = '';
-                          List<bool> erroAnterior = [false];
-                          if (value == null || value.isEmpty || value == ' ') {
-                            erros += 'Campos vazios não são aceitos';
-                            erroAnterior[0] = true;
-                          }
-                          if (!AllValidations.isStrongPassword(value!)) {
-                            erros += erroAnterior[0] ? '\n' : '';
-                            erros += 'Insira uma senha mais forte.';
-                          }
-                          return erros.isEmpty ? null : erros;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: TextFormField(
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.key),
-                            label: Text('Confirmar Senha')),
-                        obscureText: isPasswordInvisible,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        validator: (String? value) {
-                          String erros = '';
-                          List<bool> erroAnterior = [false];
-                          if (value == null || value.isEmpty || value == ' ') {
-                            erros += 'Campos vazios não são aceitos';
-                            erroAnterior[0] = true;
-                          }
-                          if (value != senhaCtrl.text) {
-                            erros += erroAnterior[0] ? '\n' : '';
-                            erros += 'As senhas devem ser iguais.';
-                          }
-                          return erros.isEmpty ? null : erros;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: TextFormField(
-                        controller: numCtrl,
-                        inputFormatters: [PhoneNumberInputFormatter()],
-                        decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.phone_android),
-                            label: Text('Número de telefone')),
-                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                        validator: (String? value) {
-                          String erros = '';
-                          List<bool> erroAnterior = [false];
-                          if (value == null || value.isEmpty || value == ' ') {
-                            erros += 'Campos vazios não são aceitos';
-                            erroAnterior[0] = true;
-                          }
-                          if (!AllValidations.isPhoneNumber(value!)) {
-                            erros += erroAnterior[0] ? '\n' : '';
-                            erros += 'Insira um número de telefone válido';
-                          }
-                          return erros.isEmpty ? null : erros;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Visibility(
-                      visible: isTecnico,
-                      child: Column(
+                      child: Wrap(
                         children: [
-                          FractionallySizedBox(
-                            widthFactor: 0.9,
-                            child: TextFormField(
-                              controller: bioCtrl,
-                              decoration: const InputDecoration(
-                                label: Text('Um pouco sobre você'),
-                                prefixIcon: Icon(Icons.badge_outlined),
-                                hintText:
-                                    'Áreas de atuação\nEspecializações\nDisponibilidade',
-                              ),
-                              autocorrect: true,
-                              enableSuggestions: true,
-                              maxLengthEnforcement:
-                                  MaxLengthEnforcement.enforced,
-                              minLines: 3,
-                              maxLines: 4,
-                              maxLength: 300,
-                              validator: (String? value) {
-                                String erros = '';
-                                if (value == null ||
-                                    value.isEmpty ||
-                                    value == ' ') {
-                                  erros += 'Campos vazios não são aceitos\n';
-                                }
-                                if (value!.split(" ").length <= 10) {
-                                  erros +=
-                                      'A Bio deve conter no mínimo 10 palavras\n';
-                                }
-                                return erros.isEmpty ? null : erros;
-                              },
+                          const SizedBox(height: 5),
+                          TextFormField(
+                            controller: cpfCtrl,
+                            inputFormatters: [CpfInputFormatter()],
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.account_circle),
+                              label: Text('CPF'),
+                              hintText: '123.456.789-00',
                             ),
+                            keyboardType: TextInputType.number,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            validator: (String? value) {
+                              String erros = '';
+                              List<bool> erroAnterior = [false];
+                              if (value == null || value.isEmpty || value == ' ') {
+                                erros += 'Campos vazios não são aceitos';
+                                erroAnterior[0] = true;
+                              }
+                              if (!AllValidations.isCpf(value!)) {
+                                erros += erroAnterior[0] ? '\n' : '';
+                                erros += 'Insira um CPF válido';
+                              }
+                              return erros.isEmpty ? null : erros;
+                            },
                           ),
                           const SizedBox(height: 5),
-                          FractionallySizedBox(
-                              widthFactor: 0.9,
-                              child: MaterialButton(
-                                  padding: const EdgeInsets.all(0),
-                                  onPressed: () => pickFile(),
-                                  child: IgnorePointer(
-                                    child: TextFormField(
-                                        validator: isTecnico
-                                            ? (String? value) {
-                                                String erros = '';
-                                                if (value ==
-                                                    'Selecione um ou mais certificados') {
-                                                  erros +=
-                                                      'Você precisa inserir ao menos um certificado.';
-                                                }
-                                                return erros.isEmpty
-                                                    ? null
-                                                    : erros;
-                                              }
-                                            : (String? value) {
-                                                String erros = '';
-                                                if (value !=
-                                                    'Selecione um ou mais certificados') {
-                                                  erros +=
-                                                      'Você precisa inserir ao menos um certificado.';
+                          TextFormField(
+                            controller: emailCtrl,
+                            decoration: const InputDecoration(
+                              prefixIcon: Icon(Icons.mail),
+                              label: Text('E-mail'),
+                              hintText: 'exemplo@exemplo.com',
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            validator: (String? value) {
+                              String erros = '';
+                              List<bool> erroAnterior = [false];
+                              if (value == null || value.isEmpty || value == ' ') {
+                                erros += 'Campos vazios não são aceitos';
+                                erroAnterior[0] = true;
+                              }
+                              if (!AllValidations.isEmail(value!)) {
+                                erros += erroAnterior[0] ? '\n' : '';
+                                erros += 'Insira um e-mail válido';
+                              }
+                              return erros.isEmpty ? null : erros;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          TextFormField(
+                            controller: senhaCtrl,
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.key),
+                                label: const Text('Senha'),
+                                suffixIcon: IconButton(
+                                    icon: isPasswordInvisible
+                                        ? const Icon(Icons.visibility)
+                                        : const Icon(Icons.visibility_off_outlined),
+                                    onPressed: () => setState(() {
+                                          isPasswordInvisible =
+                                              !isPasswordInvisible;
+                                        }))),
+                            obscureText: isPasswordInvisible,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            validator: (String? value) {
+                              String erros = '';
+                              List<bool> erroAnterior = [false];
+                              if (value == null || value.isEmpty || value == ' ') {
+                                erros += 'Campos vazios não são aceitos';
+                                erroAnterior[0] = true;
+                              }
+                              if (!AllValidations.isStrongPassword(value!)) {
+                                erros += erroAnterior[0] ? '\n' : '';
+                                erros += 'Insira uma senha mais forte.';
+                              }
+                              return erros.isEmpty ? null : erros;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.key),
+                                label: Text('Confirmar Senha')),
+                            obscureText: isPasswordInvisible,
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            validator: (String? value) {
+                              String erros = '';
+                              List<bool> erroAnterior = [false];
+                              if (value == null || value.isEmpty || value == ' ') {
+                                erros += 'Campos vazios não são aceitos';
+                                erroAnterior[0] = true;
+                              }
+                              if (value != senhaCtrl.text) {
+                                erros += erroAnterior[0] ? '\n' : '';
+                                erros += 'As senhas devem ser iguais.';
+                              }
+                              return erros.isEmpty ? null : erros;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          TextFormField(
+                            controller: numCtrl,
+                            inputFormatters: [PhoneNumberInputFormatter()],
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(Icons.phone_android),
+                                label: Text('Número de telefone')),
+                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                            validator: (String? value) {
+                              String erros = '';
+                              List<bool> erroAnterior = [false];
+                              if (value == null || value.isEmpty || value == ' ') {
+                                erros += 'Campos vazios não são aceitos';
+                                erroAnterior[0] = true;
+                              }
+                              if (!AllValidations.isPhoneNumber(value!)) {
+                                erros += erroAnterior[0] ? '\n' : '';
+                                erros += 'Insira um número de telefone válido';
+                              }
+                              return erros.isEmpty ? null : erros;
+                            },
+                          ),
+                          const SizedBox(height: 5),
+                          Visibility(
+                            visible: isTecnico,
+                            child: Column(
+                              children: [
+                                TextFormField(
+                                  controller: bioCtrl,
+                                  decoration: const InputDecoration(
+                                    label: Text('Um pouco sobre você'),
+                                    prefixIcon: Icon(Icons.badge_outlined),
+                                    hintText:
+                                        'Áreas de atuação\nEspecializações\nDisponibilidade',
+                                  ),
+                                  autocorrect: true,
+                                  enableSuggestions: true,
+                                  maxLengthEnforcement:
+                                      MaxLengthEnforcement.enforced,
+                                  minLines: 3,
+                                  maxLines: 4,
+                                  maxLength: 300,
+                                  validator: (String? value) {
+                                    String erros = '';
+                                    if (value == null ||
+                                        value.isEmpty ||
+                                        value == ' ') {
+                                      erros += 'Campos vazios não são aceitos\n';
+                                    }
+                                    if (value!.split(" ").length <= 10) {
+                                      erros +=
+                                          'A Bio deve conter no mínimo 10 palavras\n';
+                                    }
+                                    return erros.isEmpty ? null : erros;
+                                  },
+                                ),
+                                const SizedBox(height: 5),
+                                MaterialButton(
+                                    padding: const EdgeInsets.all(0),
+                                    onPressed: () => pickFile(),
+                                    child: IgnorePointer(
+                                      child: TextFormField(
+                                          validator: isTecnico
+                                              ? (String? value) {
+                                                  String erros = '';
+                                                  if (value ==
+                                                      'Selecione um ou mais certificados') {
+                                                    erros +=
+                                                        'Você precisa inserir ao menos um certificado.';
+                                                  }
                                                   return erros.isEmpty
                                                       ? null
                                                       : erros;
                                                 }
-                                                return erros.isEmpty
-                                                    ? null
-                                                    : erros;
-                                              },
-                                        readOnly: true,
-                                        controller: qtdCertificados,
-                                        decoration: const InputDecoration(
-                                            border: OutlineInputBorder(
-                                                borderSide:
-                                                    BorderSide(width: 10)),
-                                            prefixIcon:
-                                                Icon(Icons.file_upload))),
-                                  ))),
-                          const SizedBox(height: 5),
+                                              : (String? value) {
+                                                  String erros = '';
+                                                  if (value !=
+                                                      'Selecione um ou mais certificados') {
+                                                    erros +=
+                                                        'Você precisa inserir ao menos um certificado.';
+                                                    return erros.isEmpty
+                                                        ? null
+                                                        : erros;
+                                                  }
+                                                  return erros.isEmpty
+                                                      ? null
+                                                      : erros;
+                                                },
+                                          readOnly: true,
+                                          controller: qtdCertificados,
+                                          decoration: const InputDecoration(
+                                              border: OutlineInputBorder(
+                                                  borderSide:
+                                                      BorderSide(width: 10)),
+                                              prefixIcon:
+                                                  Icon(Icons.file_upload))),
+                                    )),
+                                const SizedBox(height: 5),
+                              ],
+                            ),
+                          ),
+                          FractionallySizedBox(
+                            widthFactor: 1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  isTecnico
+                                      ? _showMyDialog()
+                                      : {
+                                          Navigator.of(context).pushAndRemoveUntil(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const LandingPage()),
+                                              (Route route) => false),
+                                          showSnackBar(
+                                              'Cadastrou-se como usuário comum',
+                                              context)
+                                        };
+                                }
+                              },
+                              child: const Text('CADASTRAR'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )),
+                    FractionallySizedBox(
+                      widthFactor: 0.9,
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 16),
+                          const Text('Ou também'),
+                          const SizedBox(height: 16),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Theme.of(context).primaryColorLight),
+                              elevation: const MaterialStatePropertyAll(10),
+                              shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ))
+                            ),
+                            onPressed: () {
+                              //TODO: Implementar cadastro com google
+                              showSnackBar('Cadastrado com google', context);
+                            },
+                            child: ListTile(
+                              leading: Image.network('https://www.transparentpng.com/thumb/google-logo/shady-google-logo-pictures-png-free-BjH4wQ.png',
+                                height: 40),
+                              title: const Center(child: Text('CADASTRAR COM GOOGLE')),
+                              trailing: const SizedBox(),
+                            )
+                          ),
                         ],
                       ),
                     ),
-                    FractionallySizedBox(
-                      widthFactor: 0.9,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            isTecnico
-                                ? _showMyDialog()
-                                : showSnackBar(
-                                    'Cadastrou-se como usuário comum', context);
-                          }
-                        },
-                        child: const Text('ENVIAR'),
-                      ),
-                    ),
                     Padding(
-                        padding: const EdgeInsets.only(top: 25),
-                        child: GestureDetector(
-                          onTap: () => widget.comesFromLogin != null
-                              ? Navigator.pop(context)
-                              : Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      const Login(comesFromSignUp: true))),
-                          child: RichText(
-                              text: const TextSpan(
-                                  text: 'Já tem uma conta? ',
-                                  style: TextStyle(color: Colors.black),
-                                  children: <TextSpan>[
-                                TextSpan(
-                                    text: 'Realizar login',
-                                    style: TextStyle(color: Colors.blueAccent))
-                              ])),
-                        )),
-                  ],
-                )),
+                      padding: const EdgeInsets.symmetric(vertical: 25),
+                      child: GestureDetector(
+                            onTap: () => widget.comesFromLogin != null
+                                ? Navigator.pop(context)
+                                : Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Login(comesFromSignUp: true))),
+                            child: RichText(
+                                text: const TextSpan(
+                                    text: 'Já tem uma conta? ',
+                                    style: TextStyle(color: Colors.black),
+                                    children: <TextSpan>[
+                                  TextSpan(
+                                      text: 'Realizar login',
+                                      style: TextStyle(color: Colors.blueAccent))
+                                ])),
+                          ),
+                    ),
+              ],
+            ),
           ),
-        )
+        ),
       ],
     ));
   }

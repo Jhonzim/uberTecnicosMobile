@@ -78,7 +78,7 @@ class _ContractDetailsState extends State<ContractDetails> {
                         height: 300,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            onError: (exception, stackTrace) => Image.asset('images/imageNotFound.png',
+                            onError: (exception, stackTrace) => Image.asset('images/ImageNotFound.png',
                                     fit: BoxFit.fitHeight),
                             image: NetworkImage(widget.contract.imageLinks[0]),
                             fit: BoxFit.cover,
@@ -100,7 +100,7 @@ class _ContractDetailsState extends State<ContractDetails> {
                                 fit: BoxFit.cover, errorBuilder:
                                     (BuildContext context, Object exception,
                                         StackTrace? stackTrace) {
-                              return Image.asset('images/imageNotFound.png',
+                              return Image.asset('images/ImageNotFound.png',
                                   fit: BoxFit.fitHeight);
                             }),
                           ),

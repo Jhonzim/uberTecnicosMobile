@@ -4,15 +4,23 @@ import 'package:tech_share/privacy_policy.dart';
 import 'package:tech_share/terms_of_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-bool isIOS = Platform.isIOS;
+bool isIOS = !Platform.isIOS;
 
 var usuario = {
-  'nome': 'Francisco',
+  'nome': 'Francisco Alves de Freitas Neto',
   'imagem':
       'https://scontent.fcaw3-1.fna.fbcdn.net/v/t1.18169-9/227059_398887146857886_1609713474_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=cdbe9c&_nc_ohc=mnNto5yvsJYAX8weDnU&_nc_ht=scontent.fcaw3-1.fna&oh=00_AfCUFOr3rSohVwwa37xOj-Sfo1Fe97Vgn7fHewIcN0dQtQ&oe=6463F925',
   'imagemfundo':
       'https://w0.peakpx.com/wallpaper/779/158/HD-wallpaper-fluminense-fc-paint-art-logo-creative-brazilian-football-team-brazilian-serie-a-emblem-burgundy-background-grunge-style-rio-de-janeiro-brazil-football.jpg',
   'isTecnico': true,
+};
+var usuariocomum = {
+  'nome': 'Zé da Timba',
+  'imagem':
+      'https://this-person-does-not-exist.com/',
+  'imagemfundo':
+      'https://wallpaperaccess.com/full/7861225.jpg',
+  'isTecnico': false,
 };
 
 List<Map<String, dynamic>> categorias = [
@@ -141,162 +149,297 @@ sendEmail() {
 }
 
 buildStandardDrawer(context) => Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      Stack(
         children: [
-          Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  image: DecorationImage(
-                    image: NetworkImage(usuario['imagemfundo'].toString()),
-                    fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: NetworkImage(usuario['imagemfundo'].toString()),
+                fit: BoxFit.cover,
+              ),
+            ),
+            height: MediaQuery.of(context).size.height * 0.18,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                CircleAvatar(
+                  radius: 52.0,
+                  backgroundColor: Colors.green,
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage:
+                        NetworkImage(usuario['imagem'].toString()),
+                    backgroundColor: Colors.transparent,
                   ),
                 ),
-                height: MediaQuery.of(context).size.height * 0.18,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Column(
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.12),
-                    CircleAvatar(
-                      radius: 52.0,
-                      backgroundColor: Colors.green,
-                      child: CircleAvatar(
-                        radius: 50.0,
-                        backgroundImage:
-                            NetworkImage(usuario['imagem'].toString()),
-                        backgroundColor: Colors.transparent,
-                      ),
-                    ),
-                    Text(usuario['nome'].toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 18)),
-                    Text(usuario['isTecnico'] == true
-                        ? 'Usuário técnico'
-                        : 'Usuário comum'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const ListTile(
-            subtitle: Text('CONTRATOS'),
-          ),
-          usuario['isTecnico'] != true
-              ? ListTile(
-                  leading: const Icon(Icons.add_circle),
-                  title: const Text('Criar contratos'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              : const SizedBox(),
-          usuario['isTecnico'] != true
-              ? ListTile(
-                  leading: const Icon(Icons.list),
-                  title: const Text('Contratos criados'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              : ListTile(
-                  leading: const Icon(Icons.event),
-                  title: const Text('Contratos aceitos'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-          usuario['isTecnico'] == true
-              ? ListTile(
-                  leading: const Icon(Icons.favorite),
-                  title: const Text('Contratos salvos'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              : const SizedBox(),
-          usuario['isTecnico'] == true
-              ? ListTile(
-                  leading: const Icon(Icons.access_time),
-                  title: const Text('Recentes'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                )
-              : const SizedBox(),
-          const ListTile(
-            subtitle: Text('DETALHES'),
-          ),
-          ListTile(
-            leading: const Icon(Icons.info),
-            title: const Text('Sobre nós'),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                title: Row(
-                  children: [
-                    Image.asset('images/iconeroubado.png', height: 50),
-                    const SizedBox(width: 10),
-                    Wrap(
-                      direction: Axis.vertical,
-                        children: const [
-                          Text('Tech Share', style: TextStyle(fontSize: 18)),
-                          Text('1.0.0', style: TextStyle(fontSize: 12)),
-                          Text('© 2023 Amanhã eu faço, confia', style: TextStyle(fontSize: 11, color: Colors.black45)),
-                        ],
-                      ),
-                  ],
-                ),
-                  content: Wrap(
-                    children: [
-                      const Text('Agradecemos por escolher o aplicativo Tech Share para solucionar problemas relacionados à tecnologia e compartilhar conhecimentos com a comunidade. Esperamos que você tenha encontrado valor em nossa plataforma e continue a explorar e contribuir com nosso conteúdo. Nosso objetivo é fornecer uma experiência agradável e enriquecedora, e agradecemos por fazer parte da nossa comunidade.',
-                      textAlign: TextAlign.justify),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const TermsOfService())),
-                            child: const Text(
-                              'Termos de uso',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const PrivacyPolicy())),
-                            child: const Text(
-                              'Política de privacidade',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => showLicensePage(context: context),
-                      child: const Text('VER LICENSAS')),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('FECHAR')),
-                  ],
-                ),
-              );
-            },
+                Text(usuario['nome'].toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 18)),
+                Text(usuario['isTecnico'] == true
+                    ? 'Usuário técnico'
+                    : 'Usuário comum'),
+              ],
+            ),
           ),
         ],
       ),
-    );
+      const ListTile(
+        subtitle: Text('CONTRATOS'),
+      ),
+      usuario['isTecnico'] != true
+          ? ListTile(
+              leading: const Icon(Icons.add_circle),
+              title: const Text('Criar contratos'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          : const SizedBox(),
+      usuario['isTecnico'] != true
+          ? ListTile(
+              leading: const Icon(Icons.list),
+              title: const Text('Contratos criados'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          : ListTile(
+              leading: const Icon(Icons.event),
+              title: const Text('Contratos aceitos'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+      usuario['isTecnico'] == true
+          ? ListTile(
+              leading: const Icon(Icons.favorite),
+              title: const Text('Contratos salvos'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          : const SizedBox(),
+      usuario['isTecnico'] == true
+          ? ListTile(
+              leading: const Icon(Icons.access_time),
+              title: const Text('Recentes'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            )
+          : const SizedBox(),
+      const ListTile(
+        subtitle: Text('DETALHES'),
+      ),
+      ListTile(
+        leading: const Icon(Icons.info),
+        title: const Text('Sobre nós'),
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Image.asset('images/iconeroubado.png', height: 50),
+                const SizedBox(width: 10),
+                Wrap(
+                  direction: Axis.vertical,
+                    children: const [
+                      Text('Tech Share', style: TextStyle(fontSize: 18)),
+                      Text('1.0.0', style: TextStyle(fontSize: 12)),
+                      Text('© 2023 Amanhã eu faço, confia', style: TextStyle(fontSize: 11, color: Colors.black45)),
+                    ],
+                  ),
+              ],
+            ),
+              content: Wrap(
+                children: [
+                  const Text('Agradecemos por escolher o aplicativo Tech Share para solucionar problemas relacionados à tecnologia e compartilhar conhecimentos com a comunidade. Esperamos que você tenha encontrado valor em nossa plataforma e continue a explorar e contribuir com nosso conteúdo. Nosso objetivo é fornecer uma experiência agradável e enriquecedora, e agradecemos por fazer parte da nossa comunidade.',
+                  textAlign: TextAlign.justify),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TermsOfService())),
+                        child: const Text(
+                          'Termos de uso',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PrivacyPolicy())),
+                        child: const Text(
+                          'Política de privacidade',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => showLicensePage(context: context),
+                  child: const Text('VER LICENSAS')),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('FECHAR')),
+              ],
+            ),
+          );
+        },
+      ),
+    ],
+  ),
+);
+
+buildTechnicalUserDrawer(context) => Drawer(
+  child: ListView(
+    padding: EdgeInsets.zero,
+    children: [
+      Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.green,
+              image: DecorationImage(
+                image: NetworkImage(usuario['imagemfundo'].toString()),
+                fit: BoxFit.cover,
+              ),
+            ),
+            height: MediaQuery.of(context).size.height * 0.18,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.12),
+                CircleAvatar(
+                  radius: 52.0,
+                  backgroundColor: Colors.green,
+                  child: CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage:
+                        NetworkImage(usuario['imagem'].toString()),
+                    backgroundColor: Colors.transparent,
+                  ),
+                ),
+                Text(usuario['nome'].toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 18)),
+                const Text('Usuário técnico'),
+              ],
+            ),
+          ),
+        ],
+      ),
+      const ListTile(
+        subtitle: Text('CONTRATOS'),
+      ),
+      ListTile(
+              leading: const Icon(Icons.event),
+              title: const Text('Contratos aceitos'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+      ListTile(
+              leading: const Icon(Icons.favorite),
+              title: const Text('Contratos salvos'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+      ListTile(
+              leading: const Icon(Icons.access_time),
+              title: const Text('Recentes'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+      const ListTile(
+        subtitle: Text('DETALHES'),
+      ),
+      ListTile(
+        leading: const Icon(Icons.info),
+        title: const Text('Sobre nós'),
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+            title: Row(
+              children: [
+                Image.asset('images/iconeroubado.png', height: 50),
+                const SizedBox(width: 10),
+                Wrap(
+                  direction: Axis.vertical,
+                    children: const [
+                      Text('Tech Share', style: TextStyle(fontSize: 18)),
+                      Text('1.0.0', style: TextStyle(fontSize: 12)),
+                      Text('© 2023 Amanhã eu faço, confia', style: TextStyle(fontSize: 11, color: Colors.black45)),
+                    ],
+                  ),
+              ],//todo separar os drawers
+            ),
+              content: Wrap(
+                children: [
+                  const Text('Agradecemos por escolher o aplicativo Tech Share para solucionar problemas relacionados à tecnologia e compartilhar conhecimentos com a comunidade. Esperamos que você tenha encontrado valor em nossa plataforma e continue a explorar e contribuir com nosso conteúdo. Nosso objetivo é fornecer uma experiência agradável e enriquecedora, e agradecemos por fazer parte da nossa comunidade.',
+                  textAlign: TextAlign.justify),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TermsOfService())),
+                        child: const Text(
+                          'Termos de uso',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PrivacyPolicy())),
+                        child: const Text(
+                          'Política de privacidade',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => showLicensePage(context: context),
+                  child: const Text('VER LICENSAS')),
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('FECHAR')),
+              ],
+            ),
+          );
+        },
+      ),
+    ],
+  ),
+);
 
 void showSnackBar(String texto, context) {
   ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -444,4 +587,9 @@ checaCategoriaProvisorio(int id) {
     debugPrint('Categoria não encontrada');
     return 'Categoria não encontrada';
   }
+}
+
+String getFirstName(String fullName) {
+  List<String> nameParts = fullName.split(" ");
+  return nameParts[0];
 }

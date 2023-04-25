@@ -55,7 +55,7 @@ class _IndexState extends State<Index> {
               children: [
                 Align(
                   alignment: Alignment.bottomLeft,
-                  child: Text('Boas-vindas, ${usuario['nome']}',
+                  child: Text('Boas-vindas, ${getFirstName(usuario['nome'].toString())}',
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           fontSize: 16.sp, fontWeight: FontWeight.bold)),

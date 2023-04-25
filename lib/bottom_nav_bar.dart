@@ -33,6 +33,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: PageView.builder(
         controller: pageController,
+        physics: const PageScrollPhysics(),
+        itemCount: pageView.length,
         itemBuilder: (BuildContext context, int index) {
           final bool isCurrentPage = index == _selectedIndex;
           final double horizontalMargin = isCurrentPage ? 0.0 : 16.0;
@@ -67,7 +69,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: !isIOS
                 ? const Icon(Icons.person)
                 : const Icon(CupertinoIcons.person),
-            label: 'Configurações',
+            label: 'Perfil',
           ),
         ],
         currentIndex: _selectedIndex,

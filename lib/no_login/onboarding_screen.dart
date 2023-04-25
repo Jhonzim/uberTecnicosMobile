@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_share/no_login/cadastro.dart';
-import 'package:tech_share/no_login/landing_page.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -103,7 +100,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         const Text(
                           'Não se preocupe. No Tech Share, você encontra',
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 18),
+                          style: TextStyle(fontSize: 15),
                         ),
                         AnimatedTextKit(
                           animatedTexts: [
@@ -141,8 +138,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         FractionallySizedBox(
                           widthFactor: 0.9,
                           child: Text(
-                            'Seu dispositivo merece os melhores cuidados, e na Tech Share você pode confiar! Os técnicos são avaliados após cada serviço prestado, garantindo a qualidade do atendimento e proporcionando segurança e tranquilidade para o próximo contratante. Conte conosco para resolver seus problemas de informática de forma confiável e eficiente!',
-                            textAlign: TextAlign.justify,
+                            'No Tech Share, técnicos são avaliados após cada serviço, garantindo tranquilidade ao contratante.',
+                            textAlign: TextAlign.center,
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
@@ -162,7 +159,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Text('Tech Share',
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
                         Text(
-                          'Com o Tech Share, compartilhe seus problemas tecnológicos e\nencontre a solução com um técnico especializado!',
+                          'Com o Tech Share, compartilhe seus problemas tecnológicos e encontre a solução com um técnico especializado!',
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                         ),
